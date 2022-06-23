@@ -36,4 +36,3 @@
 /config/credentials.yml.enc
 /config/database.yml
 /config/initializers/my_constants.rb
-/config/environments/*
