@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_23_082817) do
+ActiveRecord::Schema.define(version: 2022_06_23_155121) do
 
   create_table "answers", charset: "utf8", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -147,6 +147,8 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.string "last_name"
     t.bigint "user_type_id", null: false
     t.string "email"
+    t.string "token"
+    t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_type_id"], name: "index_users_on_user_type_id"
