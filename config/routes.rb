@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 		namespace :admin do
 			get :listReports
 			get :getProjects
+			get :getProjectDetail
 			post :newProject
 		end
 	end

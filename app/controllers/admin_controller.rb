@@ -4,13 +4,15 @@ class AdminController < ApplicationController
 		centers = Center.all()
 		incident_types = QOption.where(question_id: 10)
 		projects = Project.all()
+		report_statuses = RStatus.all()
 
 		render :json => {
 			:error => false,
 			:reports => reports,
 			:centers => centers,
 			:incident_types => incident_types,
-			:projects => projects
+			:projects => projects,
+			:report_statuses => report_statuses
 		}
 	end
 	def getProjects
@@ -69,6 +71,15 @@ class AdminController < ApplicationController
 		render :json => {
 			:error => false,
 			:msg => 'project succesfully created'
+		}
+	end
+	def getProjectDetail
+		report = Report.all_reports_list().where(id: params['report_id']).take
+		answers = Answer.reportAnswers().where(report_id: params['report_id'])
+		render :json => {
+			:error => false,
+			:report => report,
+			:answers => answers
 		}
 	end
 end
