@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  question: one
+  q_option_title: MyString
+  q_option_txt: MyString
+  q_option_order: 1
+
+two:
+  question: two
+  q_option_title: MyString
+  q_option_txt: MyString
+  q_option_order: 1

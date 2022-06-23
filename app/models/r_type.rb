@@ -1,0 +1,2 @@
+class RType < ApplicationRecord
+end

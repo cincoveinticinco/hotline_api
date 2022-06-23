@@ -1,0 +1,2 @@
+class RMethod < ApplicationRecord
+end

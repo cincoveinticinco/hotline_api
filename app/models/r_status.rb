@@ -1,0 +1,2 @@
+class RStatus < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class QType < ApplicationRecord
+end

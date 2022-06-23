@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  question: one
+  report: one
+  a_txt: MyString
+  a_yes_or_no: false
+  q_option: one
+
+two:
+  question: two
+  report: two
+  a_txt: MyString
+  a_yes_or_no: false
+  q_option: two

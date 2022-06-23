@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  r_type: one
+  r_method: one
+  r_status: one
+  r_email: MyString
+  r_reference: MyString
+  r_password: MyString
+
+two:
+  r_type: two
+  r_method: two
+  r_status: two
+  r_email: MyString
+  r_reference: MyString
+  r_password: MyString

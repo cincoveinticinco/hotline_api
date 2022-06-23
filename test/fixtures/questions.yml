@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  r_type: one
+  q_type: one
+  q_title: MyString
+  q_txt: MyString
+
+two:
+  r_type: two
+  q_type: two
+  q_title: MyString
+  q_txt: MyString
