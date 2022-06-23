@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-	before_action :authorize_request
+	skip_before_action :verify_authenticity_token
 	
 	def checkLocation(info)
 		el = Location.find_by(location_name: info)
