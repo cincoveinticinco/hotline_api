@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-	before_action :authorize_request
+	# before_action :authorize_request
 	
 	def checkLocation(info)
 		el = Location.find_by(location_name: info)

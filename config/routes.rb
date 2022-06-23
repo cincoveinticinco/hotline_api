@@ -10,5 +10,11 @@ Rails.application.routes.draw do
 			get :getProjects
 			post :newProject
 		end
+		namespace :login do
+			post :sendToken
+			post :loginToken
+			get :getGoogleRoute
+			get :googleLogin
+		end
 	end
 end

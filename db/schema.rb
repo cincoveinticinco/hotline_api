@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_23_082817) do
+ActiveRecord::Schema.define(version: 2022_06_23_155121) do
 
-  create_table "answers", charset: "utf8", force: :cascade do |t|
+  create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "report_id", null: false
     t.string "a_txt"
@@ -25,19 +25,19 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["report_id"], name: "index_answers_on_report_id"
   end
 
-  create_table "centers", charset: "utf8", force: :cascade do |t|
+  create_table "centers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "center_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "locations", charset: "utf8", force: :cascade do |t|
+  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "location_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "project_aliases", charset: "utf8", force: :cascade do |t|
+  create_table "project_aliases", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.string "p_alias"
     t.datetime "created_at", precision: 6, null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["project_id"], name: "index_project_aliases_on_project_id"
   end
 
-  create_table "projects", charset: "utf8", force: :cascade do |t|
+  create_table "projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "p_name"
     t.integer "p_season"
     t.bigint "center_id", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["location_id"], name: "index_projects_on_location_id"
   end
 
-  create_table "q_options", charset: "utf8", force: :cascade do |t|
+  create_table "q_options", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.string "q_option_title"
     t.string "q_option_txt"
@@ -66,13 +66,13 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["question_id"], name: "index_q_options_on_question_id"
   end
 
-  create_table "q_types", charset: "utf8", force: :cascade do |t|
+  create_table "q_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "q_type_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "questions", charset: "utf8", force: :cascade do |t|
+  create_table "questions", charset: "latin1", force: :cascade do |t|
     t.bigint "r_type_id", null: false
     t.bigint "q_type_id", null: false
     t.string "q_title"
@@ -83,13 +83,13 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["r_type_id"], name: "index_questions_on_r_type_id"
   end
 
-  create_table "r_methods", charset: "utf8", force: :cascade do |t|
+  create_table "r_methods", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "r_method_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "r_replies", charset: "utf8", force: :cascade do |t|
+  create_table "r_replies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "report_id", null: false
     t.bigint "user_id", null: false
     t.string "reply_txt"
@@ -99,19 +99,19 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["user_id"], name: "index_r_replies_on_user_id"
   end
 
-  create_table "r_statuses", charset: "utf8", force: :cascade do |t|
+  create_table "r_statuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "r_status_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "r_types", charset: "utf8", force: :cascade do |t|
+  create_table "r_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "r_type_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "reports", charset: "utf8", force: :cascade do |t|
+  create_table "reports", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "r_type_id", null: false
     t.bigint "r_method_id", null: false
     t.bigint "r_status_id", null: false
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["r_type_id"], name: "index_reports_on_r_type_id"
   end
 
-  create_table "user_has_projects", charset: "utf8", force: :cascade do |t|
+  create_table "user_has_projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -136,17 +136,19 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.index ["user_id"], name: "index_user_has_projects_on_user_id"
   end
 
-  create_table "user_types", charset: "utf8", force: :cascade do |t|
+  create_table "user_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "user_type_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", charset: "utf8", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_type_id", null: false
     t.string "first_name"
     t.string "last_name"
-    t.bigint "user_type_id", null: false
     t.string "email"
+    t.string "token"
+    t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_type_id"], name: "index_users_on_user_type_id"

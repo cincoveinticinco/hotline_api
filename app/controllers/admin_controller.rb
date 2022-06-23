@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+	before_action :validateToken
+
 	def listReports
 		reports = Report.all_reports_list()
 		centers = Center.all()
@@ -70,5 +72,26 @@ class AdminController < ApplicationController
 			:error => false,
 			:msg => 'project succesfully created'
 		}
+	end
+
+	private
+	def validateToken
+		require 'jwt'
+		header = request.headers['HTTP_AUTHORIZATION']
+		pattern = /^Bearer /
+		header = header.gsub(pattern, '') if header && header.match(pattern)
+		begin
+			decode_token = (JWT.decode header, Rails.application.credentials.secret_key_base, true, { algorithm: 'HS256' }).first
+			user = User.where(email: decode_token["email"], token: decode_token["token"]).take
+			if user
+				user.token_last_update < 30.minutes.ago ? 
+						(render :json => { :error => true, :msg => "Expired token" }) : 
+						user.update(token_last_update: DateTime.now)
+			else
+				render :json => { :error => true, :msg => "Invalid User" }
+			end
+		rescue => e
+            render :json => { :error => true, :msg => "Decode Error: #{e}" }
+		end
 	end
 end
