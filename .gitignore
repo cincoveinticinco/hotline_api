@@ -29,3 +29,11 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/master.key
+
+/config/initializers/secret_token.rb
+/config/master.key
+/config/credentials.yml.enc
+/config/database.yml
+/config/initializers/my_constants.rb
+/config/environments/*
