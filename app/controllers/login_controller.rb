@@ -78,12 +78,6 @@ class LoginController < ApplicationController
     def loginReport
         report = Report.find_by(r_reference: params[:reference])
         isAuthed = report.try(:authenticate, params[:password])
-        email = "mauricio.b@cincoveinticinco.com"
-        reply_txt = "1234FAÑLÑQ"
-		report = Report.find(77)
-
-		UserMailer.newReportAdmin(report).deliver_later
-
         if !report
             render json: {
                 key: 'username',

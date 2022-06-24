@@ -15,9 +15,11 @@ class UserMailer < ApplicationMailer
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference })
         send_email(report.r_email, subject, htmlbody)
     end
-    def replyToAdmin()
+    def replyToAdmin(report)
         subject = "Welcome email"
-        htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference })
+        responses = RReply.reportReplies.where(report_id: report.id)
+        incident = Answer.where(report_id: report.id, question_id: 13).take
+        htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_admin.html.erb', :layout => false, :locals => { :incident => incident, :responses => responses })
         send_email(report.r_email, subject, htmlbody)
     end
     def newReportAdmin(report)
