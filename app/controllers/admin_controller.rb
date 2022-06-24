@@ -91,10 +91,12 @@ class AdminController < ApplicationController
 		}
 	end
 	def addReportReply
-		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: params['reply_txt'])
+		reply_txt = params['reply_txt']
+		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt)
 		new_estatus = 3
 		new_estatus = 5 if  params['to_close'] == true
-		Report.find(params['report_id']).update()
+		report = Report.find(params['report_id'])
+		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 		render :json => {
 			:error => false,
 			:msg => 'Reply succesfully saved succesfully created'

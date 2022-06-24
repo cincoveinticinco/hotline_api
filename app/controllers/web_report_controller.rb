@@ -26,6 +26,8 @@ class WebReportController < ApplicationController
 					project = Project.where("p_name = ? AND p_season = ?", name, season).take
 					rp.update(project_id: project.id) if project
 				end
+				UserMailer.followUpUser(rp.r_email, rp.r_reference).deliver_later if rp.r_email
+				UserMailer.newReportAdmin(rp).deliver_later if rp.r_email
 			end
 		end
 

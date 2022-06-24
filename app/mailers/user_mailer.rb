@@ -1,27 +1,39 @@
 class UserMailer < ApplicationMailer
     def email_token(user, token)
         receiver = user.email
-        sender = "no-reply@onewrapp.com"
-        subject = "Welcome email"
-        # The HTML body of the email
+        subject = "Report email"
         htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token })
-        # send email
-        send_email(receiver, sender, subject, htmlbody)
+        send_email(receiver, subject, htmlbody)
     end
-
-
+    def followUpUser(email, reference)
+        subject = "Welcome email"
+        htmlbody = render_to_string(:partial =>  'user_mailer/follow_up_user.html.erb', :layout => false, :locals => { :reference => reference })
+        send_email(email, subject, htmlbody)
+    end
+    def replyToUser(report, txt)
+        subject = "Welcome email"
+        htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference })
+        send_email(report.r_email, subject, htmlbody)
+    end
+    def replyToAdmin()
+        subject = "Welcome email"
+        htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference })
+        send_email(report.r_email, subject, htmlbody)
+    end
+    def newReportAdmin(report)
+        subject = "Welcome email"
+		data = Report.all_reports_list().where(id: report).take
+        htmlbody = render_to_string(:partial =>  'user_mailer/new_report_admin.html.erb', :layout => false, :locals => { :data => data })
+        send_email(report.r_email, subject, htmlbody)
+    end
     private 
-    def send_email (receiver, sender, subject, htmlbody)
+    def send_email (receiver, subject, htmlbody)
         region = "us-west-2"
-        # Specify the text encoding scheme.
         encoding = "UTF-8"
         # configure SES session
         ses = Aws::SES::Client.new(
             region: region
-            # access_key_id: "XXXXXXXXXX", 
-            # secret_access_key: "XXXXXXXXXXXXXXXXXXXXX"
         )
-     
         begin
             ses.send_email({
                 destination: {
@@ -41,7 +53,7 @@ class UserMailer < ApplicationMailer
                         data: subject,
                     },
                 },
-                source: sender,
+                source: "no-reply@onewrapp.com",
             })
             puts "Email sent!"
         rescue Aws::SES::Errors::ServiceError => error

@@ -13,6 +13,7 @@ class ReportController < ApplicationController
 	end
     def replyReport
         RReply.create(report_id: @report.id, reply_txt: params[:reply_txt])
+		UserMailer.replyToAdmin(report).deliver_later if report.r_email
         render :json => { :error => false, :msg => 'Reply succesfully saved succesfully created' }
     end
     private
