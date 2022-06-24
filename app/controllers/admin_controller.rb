@@ -75,13 +75,26 @@ class AdminController < ApplicationController
 			:msg => 'project succesfully created'
 		}
 	end
-	def getProjectDetail
+	def getReportDetail
 		report = Report.all_reports_list().where(id: params['report_id']).take
 		answers = Answer.reportAnswers().where(report_id: params['report_id'])
+		replies = RReply.reportReplies().where(report_id: params['report_id'])
 		render :json => {
 			:error => false,
 			:report => report,
-			:answers => answers
+			:answers => answers,
+			:replies => replies
+		}
+	end
+	def addReportReply
+		user_id = nil
+		RReply.create(report_id: params['report_id'], user_id: user_id, reply_txt: params['reply_txt'])
+		new_estatus = 3
+		new_estatus = 5 if  params['to_close'] == true
+		Report.find(params['report_id']).update()
+		render :json => {
+			:error => false,
+			:msg => 'Reply succesfully saved succesfully created'
 		}
 	end
 
