@@ -20,8 +20,16 @@ class WebReportController < ApplicationController
 
 			rp.update(r_email: a['answer']) if qt.id == 5
 			# Creates reference number for followup
-			rp.update(r_reference: SecureRandom.hex(10), r_status_id: 2) if qt.id == 18 and rp.r_reference.nil?
-
+			if qt.id == 18 and rp.r_reference.nil?
+				rp.update(r_reference: SecureRandom.hex(10), r_status_id: 2)
+				answer = Answer.where(report_id: rp.id).where("question_id IN (?)", [11, 12])
+				name = answer.select { |obj| obj.question_id == 11 }.first
+				season = answer.select { |obj| obj.question_id == 12 }.first
+				if name && season
+					project = Project.where("p_name = ? AND p_season = ?", name, season).take
+					rp.update(project_id: project.id) if project
+				end
+			end
 		end
 
 		render :json => {

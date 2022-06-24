@@ -20,9 +20,11 @@ class AdminController < ApplicationController
 	def getProjects
 		projects = Project.getProjectList()
 		centers = Center.all
+		locations = Location.all
 		render :json => {
 			:error => false,
 			:centers => centers,
+			:locations => locations,
 			:projects => projects
 		}
 	end	
@@ -89,8 +91,7 @@ class AdminController < ApplicationController
 		}
 	end
 	def addReportReply
-		user_id = nil
-		RReply.create(report_id: params['report_id'], user_id: user_id, reply_txt: params['reply_txt'])
+		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: params['reply_txt'])
 		new_estatus = 3
 		new_estatus = 5 if  params['to_close'] == true
 		Report.find(params['report_id']).update()
@@ -108,11 +109,11 @@ class AdminController < ApplicationController
 		header = header.gsub(pattern, '') if header && header.match(pattern)
 		begin
 			decode_token = (JWT.decode header, Rails.application.credentials.secret_key_base, true, { algorithm: 'HS256' }).first
-			user = User.where(email: decode_token["email"], token: decode_token["token"]).take
-			if user
-				user.token_last_update < 30.minutes.ago ? 
+			@user = User.where(email: decode_token["email"], token: decode_token["token"]).take
+			if @user
+				@user.token_last_update < 30.minutes.ago ? 
 						(render :json => { :error => true, :msg => "Expired token" }) : 
-						user.update(token_last_update: DateTime.now)
+						@user.update(token_last_update: DateTime.now)
 			else
 				render :json => { :error => true, :msg => "Invalid User" }
 			end
