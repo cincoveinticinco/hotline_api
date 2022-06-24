@@ -3,7 +3,8 @@ class Report < ApplicationRecord
   belongs_to :r_method
   belongs_to :r_status
   has_many :answer
-
+  has_secure_password
+  
   def self.all_reports_list
   	Report.select("reports.*, r_types.r_type_txt, r_methods.r_method_txt, r_statuses.r_status_txt, projects.p_name, projects.p_season, centers.center_name")
   	.select("

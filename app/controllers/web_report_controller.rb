@@ -33,7 +33,7 @@ class WebReportController < ApplicationController
 	end
 	def createPassword
 		rp = Report.find_by(id: params['report_id'],r_reference: params['report_followup'] )
-		rp.update(r_password: params['password'])
+		rp.update(password: params['password'])
 		render :json => {
 			:error => false,
 			:msg => 'Password succesfully saved'

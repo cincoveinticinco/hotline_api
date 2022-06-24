@@ -75,7 +75,27 @@ class LoginController < ApplicationController
             end
         end
     end
-
+    def loginReport
+        report = Report.find_by(r_reference: params[:reference])
+        isAuthed = report.try(:authenticate, params[:password])
+        if !report
+            render json: {
+                key: 'username',
+                message: 'No Report can be found'
+            }, status: :forbidden
+        elsif !isAuthed
+            render json: {
+                key: 'password',
+                message: 'Incorrect Password'
+                }, status: :forbidden
+        else
+            token = encode_token_report(report)
+            render json: {
+                token: token,
+                report_id: report.id
+            }
+        end
+    end
     private
     def url_google
         url_google = request.protocol + request.host_with_port
@@ -84,6 +104,11 @@ class LoginController < ApplicationController
     def encode_token(user, token)
         user.update(token: token, token_last_update: DateTime.now)
         payload = { id: user.id, email: user.email, token: token}
+        JWT.encode(payload, Rails.application.credentials.secret_key_base, 'HS256')
+    end
+    def encode_token_report(report)
+        report.update(token_last_update: DateTime.now)
+        payload = { id: report.id, reference: report.r_reference}
         JWT.encode(payload, Rails.application.credentials.secret_key_base, 'HS256')
     end
 end

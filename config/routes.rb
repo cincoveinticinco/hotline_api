@@ -17,6 +17,11 @@ Rails.application.routes.draw do
 			post :loginToken
 			get :getGoogleRoute
 			get :googleLogin
+			post :loginReport
+		end
+		namespace :report do
+			post :infoReport
+			post :replyReport
 		end
 	end
 end
