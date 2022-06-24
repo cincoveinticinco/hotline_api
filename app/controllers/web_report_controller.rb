@@ -1,8 +1,6 @@
 class WebReportController < ApplicationController
 	def submitAnswer
 		answers = params['answers']
-		puts "params['answers']"
-		puts params['answers']
 		if params['report_id'].blank?
 			# set default type hotline, default status Started, method online
 			rp = Report.create(r_type_id: 1, r_status_id: 1, r_method_id: 1)

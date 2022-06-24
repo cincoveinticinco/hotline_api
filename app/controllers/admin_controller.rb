@@ -19,8 +19,10 @@ class AdminController < ApplicationController
 	end
 	def getProjects
 		projects = Project.getProjectList()
+		centers = Center.all
 		render :json => {
 			:error => false,
+			:centers => centers,
 			:projects => projects
 		}
 	end	
