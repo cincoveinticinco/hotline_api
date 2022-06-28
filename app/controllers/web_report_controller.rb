@@ -24,7 +24,7 @@ class WebReportController < ApplicationController
 				name = answers_proj.select { |obj| obj.question_id == 11 }.first
 				season = answers_proj.select { |obj| obj.question_id == 12 }.first
 				if name && season
-					project = Project.where("p_name = ? AND p_season = ?", name, season).take
+					project = Project.where("p_name = ? AND p_season = ?", name.a_txt, season.a_txt).take
 					rp.update(project_id: project.id) if project
 				end
 				UserMailer.followUpUser(rp.r_email, rp.r_reference).deliver_later if rp.r_email
