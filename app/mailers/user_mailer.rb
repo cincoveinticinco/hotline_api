@@ -33,9 +33,20 @@ class UserMailer < ApplicationMailer
         region = "us-west-2"
         encoding = "UTF-8"
         # configure SES session
-        ses = Aws::SES::Client.new(
-            region: region
-        )
+        if Rails.env.development?
+            ses = Aws::SES::Client.new(
+                :region => region,
+                :access_key_id => ACCES_KEY_ID,
+                :secret_access_key => SECRET_ACCES_KEY
+            )
+        else
+            ses = Aws::SES::Client.new(
+                region: region
+            )
+        end
+
+
+        
         begin
             ses.send_email({
                 destination: {

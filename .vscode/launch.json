@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Rails server",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/bin/rails",
+            "args": [
+               "server"
+            ],
+            "env": {
+                "PATH": "/home/alex/.rvm/gems/ruby-2.7.3/bin:/home/alex/.rvm/gems/ruby-2.7.3@global/bin:/home/alex/.rvm/rubies/ruby-2.7.3/bin:/home/alex/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+                "GEM_HOME": "/home/alex/.rvm/gems/ruby-2.7.3",
+                "GEM_PATH": "/home/alex/.rvm/gems/ruby-2.7.3:/home/alex/.rvm/gems/ruby-2.7.3@global",
+                "RUBY_VERSION": "ruby-2.7.3"
+            }
+          }
+    ]
+}
