@@ -1,0 +1,16 @@
+<!Doctype html>
+<html lang="en-US">
+    <head> 
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    </head>
+    <body>
+        <h1>Welcome to Hotline </h1>
+        <p >Incident <%= incident.a_txt %>,</p>
+        <p >Reponses 
+            <% responses.each do |response| %>
+                <%=response.date %><br>
+                <%=response.reply_txt %>
+            <% end %>
+        </p>
+    </body>
+</html>

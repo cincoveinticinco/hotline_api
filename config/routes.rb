@@ -7,8 +7,21 @@ Rails.application.routes.draw do
 		end
 		namespace :admin do
 			get :listReports
+			get :getReportDetail
 			get :getProjects
+			post :addReportReply
 			post :newProject
+		end
+		namespace :login do
+			post :sendToken
+			post :loginToken
+			get :getGoogleRoute
+			get :googleLogin
+			post :loginReport
+		end
+		namespace :report do
+			post :infoReport
+			post :replyReport
 		end
 	end
 end

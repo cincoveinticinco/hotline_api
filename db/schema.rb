@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_23_082817) do
+ActiveRecord::Schema.define(version: 2022_06_24_155014) do
 
   create_table "answers", charset: "latin1", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -118,7 +118,8 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.bigint "project_id"
     t.string "r_email"
     t.string "r_reference"
-    t.string "r_password"
+    t.string "password_digest"
+    t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_reports_on_project_id"
@@ -147,6 +148,8 @@ ActiveRecord::Schema.define(version: 2022_06_23_082817) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
+    t.string "token"
+    t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_type_id"], name: "index_users_on_user_type_id"
