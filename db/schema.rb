@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_24_155014) do
+ActiveRecord::Schema.define(version: 2022_06_28_180044) do
 
   create_table "answers", charset: "latin1", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2022_06_24_155014) do
 
   create_table "projects", charset: "latin1", force: :cascade do |t|
     t.string "p_name"
+    t.string "p_abbreviation"
     t.integer "p_season"
     t.bigint "center_id", null: false
     t.bigint "location_id", null: false

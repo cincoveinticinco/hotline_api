@@ -36,6 +36,7 @@ class AdminController < ApplicationController
 			pr = Project.find(params['id'])
 		end
 		pr.p_name = params['p_name']
+		pr.p_abbreviation = params['p_abbreviation']
 		pr.p_season = params['p_season']
 		pr.center_id = params['center_id']
 		pr.location_id = checkLocation(params['location_name'])
