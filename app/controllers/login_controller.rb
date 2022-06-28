@@ -36,17 +36,18 @@ class LoginController < ApplicationController
             "https://www.googleapis.com/auth/userinfo.profile",
             "https://www.googleapis.com/auth/userinfo.email"
         ].join(" ")
-        data = [ Rails.application.credentials.gp_client_id, scope, url_google ]
+        data = [ Rails.application.credentials.google[:gp_client_id], scope, url_google ]
         url = "https://accounts.google.com/o/oauth2/auth?client_id=%s&response_type=code&scope=%s&redirect_uri=%s&state=google" % data
         redirect_to url
     end
     def googleLogin
+       
         prms = {
             'grant_type': 'authorization_code',
             'code': params[:code],
             'redirect_uri': url_google,
-            'client_id': Rails.application.credentials.gp_client_id,
-            'client_secret': Rails.application.credentials.gp_client_secret
+            'client_id': Rails.application.credentials.google[:gp_client_id],
+            'client_secret': Rails.application.credentials.google[:gp_client_secret]
         }
         url = URI('https://accounts.google.com/o/oauth2/token')
         response = Net::HTTP.post_form(url, prms)
@@ -56,7 +57,9 @@ class LoginController < ApplicationController
             access_token = JSON.parse(body)["access_token"]
             url.query = URI.encode_www_form({'access_token': access_token})
             response = Net::HTTP.get_response(url)
+           
             if response.is_a?(Net::HTTPSuccess)
+               
                 body = response.body
                 user_data = JSON.parse(body)
                 email = user_data["email"]
@@ -65,12 +68,12 @@ class LoginController < ApplicationController
                     if user
                         token = 6.times.map{rand(10)}.join
                         token = encode_token(user, token)
-                        redirect_to("/#{token}") #logintoken
+                        redirect_to("#{URL_FRONT}/user/#{token}") #logintoken
                     else
-                        redirect_to('/') #User not found
+                        redirect_to("#{URL_FRONT}/userNot") #User not found
                     end
                 else
-                    redirect_to('/') #Email gmail error
+                    redirect_to("#{URL_FRONT}/UserNot") #Email gmail error
                 end
             end
         end
