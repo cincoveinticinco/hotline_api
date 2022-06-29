@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
         htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token })
         mails = []
         mails.push(user.email)
-        send_email(receiver, subject, htmlbody)
+        send_email(mails, subject, htmlbody)
     end
     def followUpUser(email, reference)
         subject = "TEST HOTLINE"
