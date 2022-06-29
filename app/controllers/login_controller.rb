@@ -3,6 +3,7 @@ class LoginController < ApplicationController
     require 'date'
     require 'uri'
     require 'net/http'
+    include ActionController::Cookies
 
 	def sendToken
         email = params[:email]
