@@ -27,7 +27,7 @@ class UserMailer < ApplicationMailer
         incident = Answer.where(report_id: report.id, question_id: 13).take
         
         
-        htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_admin.html.erb', :layout => false, :locals => { :incident => incident, :responses => responses })
+        htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_admin.html.erb', :layout => false, :locals => { :incident => incident, :responses => responses, :report_id=>report_id })
         mails = []
         users = User.where('user_type_id=1')
         users.each do |user|
