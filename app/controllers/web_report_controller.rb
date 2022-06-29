@@ -19,7 +19,7 @@ class WebReportController < ApplicationController
 			anw.save
 			rp.update(r_email: a['answer']) if qt.id == 5
 			if qt.id == 18 and rp.r_reference.nil?
-				rp.update(r_reference: SecureRandom.hex(10), r_status_id: 2)
+				rp.update(r_reference: SecureRandom.hex(5), r_status_id: 2)
 				answers_proj = Answer.where(report_id: rp.id).where("question_id IN (?)", [11, 12])
 				name = answers_proj.select { |obj| obj.question_id == 11 }.first
 				season = answers_proj.select { |obj| obj.question_id == 12 }.first
@@ -28,7 +28,7 @@ class WebReportController < ApplicationController
 					rp.update(project_id: project.id) if project
 				end
 				UserMailer.followUpUser(rp.r_email, rp.r_reference).deliver_later if rp.r_email
-				UserMailer.newReportAdmin(rp).deliver_later if rp.r_email
+				UserMailer.newReportAdmin(rp).deliver_later
 			end
 		end
 

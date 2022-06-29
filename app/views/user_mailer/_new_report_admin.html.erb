@@ -1,13 +1,141 @@
-<!Doctype html>
-<html lang="en-US">
-    <head> 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    </head>
-    <body>
-        <h1>Welcome to Hotline </h1>
-        <p>Center: <%= data.center_name %> </p>
-        <p>Project: <%= data.p_name %> </p>
-        <p>SEASON: <%= data.p_season %> </p>
-        <p>PRODUCTION POSITION: <%= data.position_production %> </p>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOTLINE</title>
+</head>
+<body>
+  <table align="center" cellpadding="0" cellspacing="0"
+		style="margin: 10px auto;
+			min-width: 320px;
+			max-width: 540px;
+			width: 100%;
+			font-family: Helvetica, sans-serif;
+      background-color: #efefef;
+      color: #554D54;
+      border: 2px solid #efefef;">
+		<tbody>
+			<tr>
+				<td style="text-align: center; padding: 20px; background-color: #FCF5A1;">
+					<p style="text-align: center; font-size: 29px; margin: 0;"><span style="font-weight: bold;">HOTLINE</span>REPORT</p>
+          <span style="font-size: 18px;">NEW REPORT</span>
+				</td>
+			</tr>
+			<tr>
+        <td style="padding: 30px 30px 0;">
+          <table style="width: 100%;" cellpadding="1" cellspacing="0">
+            <tbody>
+              <tr>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">DATE REPORT</span>
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%=report.created_at.strftime('%b %d %Y') %></p>
+                </td>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">METHOD</span>
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%=report.r_method_txt %>  </p>
+                </td>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">REPORTER</span>
+                  <!-- question_id: 3 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[3].blank? ? question_response[3]['answer_text'] : '-' %> </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">CENTER</span>
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !report.center_name.blank? ? report.center_name : '-' %></p>
+                </td>
+                <td colspan="2">
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">PROJECT</span>
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !report.p_name.blank? ? report.p_name : '-' %></p>
+                </td>
+                <td colspan="3">
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">POSITION ON PRODUCTION</span>
+                  <!-- question_id: 9 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[9].blank? ? question_response[9]['answer_text'] : '-' %></p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">INCIDENT TYPE</span>
+                  <!-- question_id: 10 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[10].blank? ? question_response[10]['answer_text'] : '-' %></p>
+                </td>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">DATE INCIDENT</span>
+                  <!-- question_id: 15 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[15].blank? ?  Date.parse(question_response[15]['answer_text']).strftime('%b %d %Y') : '-' %></p>
+                </td>
+                <td colspan="2">
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">LOCATION INCIDENT</span>
+                  <!-- question_id: 16 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[16].blank? ? question_response[16]['answer_text'] : '-' %></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+			</tr>
+      <tr>
+        <td style="padding: 0 30px;">
+          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">INCIDENT</span>
+          <!-- question_id: 13 -->
+          <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[13].blank? ? question_response[13]['answer_text'] : '-' %></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 0 30px;">
+          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">PEOPLE INVOLVED IN THE INCIDENT</span>
+          <!-- question_id: 14 -->
+          <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[14].blank? ? question_response[14]['answer_text'] : '-' %></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 0 30px 30px;">
+          <table style="width: 100%;" cellpadding="1" cellspacing="0">
+            <tbody>
+              <tr>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">REPEATED INCIDENT</span>
+                  <!-- question_id: 17 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[17].blank? ? question_response[17]['answer_text'] : '-' %></p>
+                </td>
+                <td>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">DISCUSSED INCIDENT WITH MANAGER</span>
+                  <!-- question_id: 18 -->
+                  <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[18].blank? ? question_response[18]['answer_text'] : '-' %></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+			<tr>
+				<td style="text-align: center; text-transform: uppercase;">
+					<a href="<%=URL_FRONT%>/admin-home" target="_blank" style="font-size: 20px;
+          margin: 30px auto 70px;
+          background-color: #A2DDE2;
+          padding: 10px 20px;
+          width: 70%;
+          height: 25px;
+          color: #363636;
+          font-weight: bold;
+          display: block;
+          text-decoration: none;">ADD REPLY</p>
+				</a>
+			</tr>
+      <tr>
+				<td style="text-align: center;
+        text-transform: uppercase;
+        font-size: 11px;
+        background-color: #ffffff;
+        padding-bottom: 10px;">
+					<p style="color: #11888c; font-weight: bold;">LEGAL TERMS | DATA POLICY</p>
+					<p style="width: 50%; margin: auto;">COPYRIGHT © 2022 GRUPO CINCOVEINTICINCO SAS. ALL RIGTHS RESERVED</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
 </html>

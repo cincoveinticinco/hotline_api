@@ -1,16 +1,75 @@
-<!Doctype html>
-<html lang="en-US">
-    <head> 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    </head>
-    <body>
-        <h1>Welcome to Hotline </h1>
-        <p >Incident <%= incident.a_txt %>,</p>
-        <p >Reponses 
-            <% responses.each do |response| %>
-                <%=response.date %><br>
-                <%=response.reply_txt %>
-            <% end %>
-        </p>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOTLINE</title>
+</head>
+<body>
+  <table align="center" cellpadding="0" cellspacing="0"
+		style="margin: 10px auto;
+			min-width: 320px;
+			max-width: 540px;
+			width: 100%;
+			font-family: Helvetica, sans-serif;
+      background-color: #efefef;
+      color: #554D54;
+      border: 2px solid #efefef;">
+		<tbody>
+			<tr>
+				<td style="text-align: center; padding: 20px; background-color: #FCF5A1;">
+					<p style="text-align: center; font-size: 29px; margin: 0;"><span style="font-weight: bold;">HOTLINE</span>REPORT</p>
+          <span style="font-size: 18px;">NEW REPLY</span>
+				</td>
+			</tr>
+      <tr>
+        <td style="padding: 20PX 30px 0;">
+          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">INCIDENT</span>
+          <p style="margin: 3px 0 10px; font-size: 11px;"><%=incident.a_txt%></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 20px 30px 10px;">
+          <span style="text-transform: uppercase; color: #11888c; font-size: 18px;">RESPONSES</span>
+        </td>
+      </tr>
+
+       <% responses.each do |response| %>
+                <tr>
+                    <td style="padding: 0 30px;">
+                    <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=response['user_name']%>. ON <%=response['date'].strftime('%b %d %Y')%></span>
+                    <p style="margin: 3px 0 5px; font-size: 11px; border-bottom: 1px solid #b5adad; padding-bottom: 3px;"><%=response['reply_txt']%></p>
+                    </td>
+                </tr>
+        <% end %>
+      
+      
+     
+			<tr>
+				<td style="text-align: center; text-transform: uppercase;">
+					<a href="" style="font-size: 20px;
+          margin: 30px auto 70px;
+          background-color: #A2DDE2;
+          padding: 10px 20px;
+          width: 70%;
+          height: 25px;
+          color: #363636;
+          font-weight: bold;
+          display: block;
+          text-decoration: none;">ADD REPLY</p>
+				</a>
+			</tr>
+      <tr>
+				<td style="text-align: center;
+        text-transform: uppercase;
+        font-size: 11px;
+        background-color: #ffffff;
+        padding-bottom: 10px;">
+					<p style="color: #11888c; font-weight: bold;">LEGAL TERMS | DATA POLICY</p>
+					<p style="width: 50%; margin: auto;">COPYRIGHT © 2022 GRUPO CINCOVEINTICINCO SAS. ALL RIGTHS RESERVED</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
 </html>

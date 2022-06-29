@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 			get :getGoogleRoute
 			get :googleLogin
 			post :loginReport
+			get :index
 		end
 		namespace :report do
 			post :infoReport
