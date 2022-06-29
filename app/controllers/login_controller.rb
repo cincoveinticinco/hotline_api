@@ -68,6 +68,11 @@ class LoginController < ApplicationController
                     if user
                         token = 6.times.map{rand(10)}.join
                         token = encode_token(user, token)
+                        cookies[:hotline] = {
+                            :value => token,
+                            :domain => :all
+                        }
+
                         redirect_to("#{URL_FRONT}/user/#{token}") #logintoken
                     else
                         redirect_to("#{URL_FRONT}/userNot") #User not found
