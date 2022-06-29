@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-	# before_action :validateToken
+	 before_action :validateToken
 
 	def listReports
 		reports = Report.all_reports_list()
