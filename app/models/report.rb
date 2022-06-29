@@ -18,6 +18,16 @@ class Report < ApplicationRecord
 	                AND answers.question_id = 10
 	        LIMIT 1
 	    ) AS Incident_type,
+			(	SELECT 
+				q_options.id
+			FROM
+				answers
+			INNER JOIN q_options ON q_options.id = answers.q_option_id
+			WHERE
+				reports.id = answers.report_id
+					AND answers.question_id = 10
+			LIMIT 1
+		) AS incident_type_id,
         (	SELECT 
 	            answers.a_txt
 	        FROM
