@@ -3,9 +3,11 @@ class AdminController < ApplicationController
 
 	def addReportReply
 		reply_txt = params['reply_txt']
-		reply = RReply.find(params['id']) if params['id'].blank?
+		reply = RReply.find(params['id']) unless params['id'].blank?
+		reply.update(reply_txt: reply_txt) unless params['id'].blank?
+
 		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
-		reply.update(reply_txt: reply_txt)
+		
 		new_estatus = 3
 		new_estatus = 5 if params['to_close'] == true
 
