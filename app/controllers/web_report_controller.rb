@@ -1,4 +1,12 @@
 class WebReportController < ApplicationController
+
+	def getProjectName
+		render :json => {
+			:error => false,
+			:p_name => 'palpito',
+			:p_season => 1
+		}
+	end
 	def submitAnswer
 		answers = params['answers']
 		if params['report_id'].blank?

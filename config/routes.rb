@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 		namespace :web_report do
 			post :submitAnswer
 			post :createPassword
+			get :getProjectName
 		end
 		namespace :admin do
 			get :listReports
@@ -11,7 +12,6 @@ Rails.application.routes.draw do
 			get :getProjects
 			post :addReportReply
 			post :newProject
-			get :getProjectName
 		end
 		namespace :login do
 			post :sendToken
