@@ -27,9 +27,10 @@ class WebReportController < ApplicationController
 	end
 	def submitAnswer
 		answers = params['answers']
+		language = params['lang'].blank? ? 1 : params['lang']
 		if params['report_id'].blank?
 			# set default type hotline, default status Started, method online
-			rp = Report.create(r_type_id: 1, r_status_id: 1, r_method_id: 1)
+			rp = Report.create(r_type_id: 1, r_status_id: 1, r_method_id: 1, language_id:language)
 			
 		else
 			rp = Report.find(params['report_id'])

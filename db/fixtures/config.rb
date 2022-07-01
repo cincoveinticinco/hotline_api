@@ -79,3 +79,15 @@ UserType.seed do |s|
   s.id = 2
   s.user_type_name = "Project user"
 end
+Language.seed do |s|
+  s.id = 1
+  s.l_name = "English"
+end
+Language.seed do |s|
+  s.id = 2
+  s.l_name = "Spanish"
+end
+Language.seed do |s|
+  s.id = 3
+  s.l_name = "Portugues"
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_28_180044) do
+ActiveRecord::Schema.define(version: 2022_07_01_205021) do
 
   create_table "answers", charset: "utf8", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -27,6 +27,12 @@ ActiveRecord::Schema.define(version: 2022_06_28_180044) do
 
   create_table "centers", charset: "utf8", force: :cascade do |t|
     t.string "center_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "languages", charset: "utf8", force: :cascade do |t|
+    t.string "l_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -113,6 +119,7 @@ ActiveRecord::Schema.define(version: 2022_06_28_180044) do
   end
 
   create_table "reports", charset: "utf8", force: :cascade do |t|
+    t.bigint "language_id", default: 1, null: false
     t.bigint "r_type_id", null: false
     t.bigint "r_method_id", null: false
     t.bigint "r_status_id", null: false
@@ -123,6 +130,7 @@ ActiveRecord::Schema.define(version: 2022_06_28_180044) do
     t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["language_id"], name: "index_reports_on_language_id"
     t.index ["project_id"], name: "index_reports_on_project_id"
     t.index ["r_method_id"], name: "index_reports_on_r_method_id"
     t.index ["r_status_id"], name: "index_reports_on_r_status_id"
@@ -167,6 +175,7 @@ ActiveRecord::Schema.define(version: 2022_06_28_180044) do
   add_foreign_key "questions", "r_types"
   add_foreign_key "r_replies", "reports"
   add_foreign_key "r_replies", "users"
+  add_foreign_key "reports", "languages"
   add_foreign_key "reports", "projects"
   add_foreign_key "reports", "r_methods"
   add_foreign_key "reports", "r_statuses"
