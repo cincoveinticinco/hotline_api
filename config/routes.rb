@@ -10,10 +10,10 @@ Rails.application.routes.draw do
 			get :listReports
 			get :getReportDetail
 			get :getProjects
-			post :addReportReply
 			post :newProject
 			post :DeleteReply
 			get :getUser
+			post :addReportReply
 		end
 		namespace :login do
 			post :sendToken
