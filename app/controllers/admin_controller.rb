@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
 	before_action :validateToken
-	
-	def addReply
+
+	def addReportReply
 		reply_txt = params['reply_txt']
 		reply = RReply.find(params['id'])
 		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
@@ -11,6 +11,7 @@ class AdminController < ApplicationController
 
 		report = Report.find(params['report_id'])
 		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
+		
 		render :json => {
 			:error => false,
 			:msg => 'Reply succesfully saved'

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 			post :newProject
 			post :DeleteReply
 			get :getUser
-			post :addReply
+			post :addReportReply
 		end
 		namespace :login do
 			post :sendToken
