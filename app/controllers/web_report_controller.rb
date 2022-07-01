@@ -1,11 +1,29 @@
 class WebReportController < ApplicationController
 
 	def getProjectName
-		render :json => {
-			:error => false,
-			:p_name => 'palpito',
-			:p_season => 1
-		}
+		p_info = params['project'].split('-')
+		puts "p_info"
+		puts p_info
+		if p_info.length > 1
+			project = Project.find_by(:p_abbreviation => p_info[0], :p_season => p_info[1])
+		else
+			project = Project.find_by(:p_abbreviation => p_info[0])
+		end
+		
+		if project.blank?
+			render :json => {
+				:error => false,
+				:p_name => nil,
+				:p_season => nil
+			}
+		else
+			render :json => {
+				:error => false,
+				:p_name => project.p_name,
+				:p_season => project.p_season
+			}
+		end
+		
 	end
 	def submitAnswer
 		answers = params['answers']
@@ -33,6 +51,9 @@ class WebReportController < ApplicationController
 				season = answers_proj.select { |obj| obj.question_id == 12 }.first
 				if name && season
 					project = Project.where("p_name = ? AND p_season = ?", name.a_txt, season.a_txt).take
+					rp.update(project_id: project.id) if project
+				elsif name
+					project = Project.where("p_name = ?", name.a_txt).take
 					rp.update(project_id: project.id) if project
 				end
 				UserMailer.followUpUser(rp.r_email, rp.r_reference).deliver_later if rp.r_email

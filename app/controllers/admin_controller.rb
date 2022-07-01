@@ -1,6 +1,19 @@
 class AdminController < ApplicationController
 	 before_action :validateToken
-
+	def getUser
+		render :json => {
+			:error => false,
+			:user => @user.id
+		}
+	end
+	def DeleteReply
+		text = 'Message deleted by user'
+		RReply.find(params['id']).update(reply_txt: text)
+		render :json => {
+			:error => false,
+			:msg => 'replu succesfully deleted'
+		}
+	end
 	def listReports
 		reports = Report.all_reports_list()
 		centers = Center.all()
@@ -93,14 +106,17 @@ class AdminController < ApplicationController
 	end
 	def addReportReply
 		reply_txt = params['reply_txt']
-		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt)
+		reply = RReply.find(params['id'])
+		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
+		reply.update(reply_txt: reply_txt)
 		new_estatus = 3
 		new_estatus = 5 if params['to_close'] == true
+
 		report = Report.find(params['report_id'])
 		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 		render :json => {
 			:error => false,
-			:msg => 'Reply succesfully saved succesfully created'
+			:msg => 'Reply succesfully saved'
 		}
 	end
 

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 			get :getProjects
 			post :addReportReply
 			post :newProject
+			post :DeleteReply
+			get :getUser
 		end
 		namespace :login do
 			post :sendToken
