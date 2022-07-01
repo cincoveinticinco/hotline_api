@@ -1,5 +1,21 @@
 class AdminController < ApplicationController
-	 before_action :validateToken
+	before_action :validateToken
+	
+	def addReply
+		reply_txt = params['reply_txt']
+		reply = RReply.find(params['id'])
+		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
+		reply.update(reply_txt: reply_txt)
+		new_estatus = 3
+		new_estatus = 5 if params['to_close'] == true
+
+		report = Report.find(params['report_id'])
+		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
+		render :json => {
+			:error => false,
+			:msg => 'Reply succesfully saved'
+		}
+	end
 	def getUser
 		render :json => {
 			:error => false,
@@ -102,21 +118,6 @@ class AdminController < ApplicationController
 			:report => report,
 			:answers => answers,
 			:replies => replies
-		}
-	end
-	def addReportReply
-		reply_txt = params['reply_txt']
-		reply = RReply.find(params['id'])
-		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
-		reply.update(reply_txt: reply_txt)
-		new_estatus = 3
-		new_estatus = 5 if params['to_close'] == true
-
-		report = Report.find(params['report_id'])
-		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
-		render :json => {
-			:error => false,
-			:msg => 'Reply succesfully saved'
 		}
 	end
 
