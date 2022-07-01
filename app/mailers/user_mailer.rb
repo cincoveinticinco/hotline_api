@@ -1,13 +1,13 @@
 class UserMailer < ApplicationMailer
     def email_token(user, token)
-        subject = "TEST HOTLINE"
+        subject = "HOTLINE.REPORT TOKEN"
         htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token })
         mails = []
         mails.push(user.email)
         send_email(mails, subject, htmlbody)
     end
     def followUpUser(email, reference)
-        subject = "TEST HOTLINE"
+        subject = "Thanks for using Hotline Report"
         htmlbody = render_to_string(:partial =>  'user_mailer/follow_up_user.html.erb', :layout => false, :locals => { :reference => reference })
         mails = []
         mails.push(email)
@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference, :incident => incident, })
         mails = []
         mails.push(report.r_email)
-        send_email(mails, subject, htmlbody)
+        send_email(mails, subject, htmlbody) unless report.r_email.blank?
     end
     def replyToAdmin(report)
         subject = "TEST HOTLINE"
@@ -42,9 +42,10 @@ class UserMailer < ApplicationMailer
         send_email(mails, subject, htmlbody)
     end
     def newReportAdmin(report)
-        subject = "Welcome email"
+        subject = "NEW INCIDENT REPORTED"
 		report = Report.all_reports_list().where(id: report).take
         answers = Answer.reportAnswers().where(report_id: report.id)
+        subject = "NEW INCIDENT REPORTED" + " - " + report.p_name unless report.p_name.blank?
         question_response = []
         cont = 1
         while cont <= 18

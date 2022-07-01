@@ -1,6 +1,14 @@
 class AdminController < ApplicationController
 	 before_action :validateToken
 
+	def getProjectName
+		
+		render :json => {
+			:error => false,
+			:p_name => 'palpito',
+			:p_season => 1
+		}
+	end
 	def listReports
 		reports = Report.all_reports_list()
 		centers = Center.all()
