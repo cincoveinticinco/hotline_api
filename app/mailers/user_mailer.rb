@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
     def email_token(user, token)
-        subject = "HOTLINE.REPORT TOKEN"
+        subject = "HOTLINE TOKEN"
         htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token })
         mails = []
         mails.push(user.email)

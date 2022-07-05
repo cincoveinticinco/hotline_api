@@ -5,7 +5,10 @@ class LoginController < ApplicationController
     require 'net/http'
     include ActionController::Cookies
 
-
+    def index
+        
+        render :json => { :error => true, :msg => "Email not found" }
+    end
 	def sendToken
         email = params[:email]
         user = User.find_by(email: email)

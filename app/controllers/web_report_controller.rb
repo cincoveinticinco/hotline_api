@@ -2,8 +2,6 @@ class WebReportController < ApplicationController
 
 	def getProjectName
 		p_info = params['project'].split('-')
-		puts "p_info"
-		puts p_info
 		if p_info.length > 1
 			project = Project.find_by(:p_abbreviation => p_info[0], :p_season => p_info[1])
 		else

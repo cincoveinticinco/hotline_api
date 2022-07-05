@@ -15,9 +15,9 @@
                "server"
             ],
             "env": {
-                "PATH": "/home/alex/.rvm/gems/ruby-2.7.3/bin:/home/alex/.rvm/gems/ruby-2.7.3@global/bin:/home/alex/.rvm/rubies/ruby-2.7.3/bin:/home/alex/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
-                "GEM_HOME": "/home/alex/.rvm/gems/ruby-2.7.3",
-                "GEM_PATH": "/home/alex/.rvm/gems/ruby-2.7.3:/home/alex/.rvm/gems/ruby-2.7.3@global",
+                "PATH": "/home/mauricio/.rvm/gems/ruby-2.7.3/bin:/home/mauricio/.rvm/gems/ruby-2.7.3@global/bin:/home/mauricio/.rvm/rubies/ruby-2.7.3/bin:/home/mauricio/.rvm/bin:/home/mauricio/.local/bin:/home/mauricio/.nvm/versions/node/v16.14.0/bin:/home/mauricio/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/oracle/instantclient_19_8:/usr/local/go/bin:/opt/oracle/instantclient_19_8:/usr/local/go/bin",
+                "GEM_HOME": "/home/mauricio/.rvm/gems/ruby-2.7.3",
+                "GEM_PATH": "/home/mauricio/.rvm/gems/ruby-2.7.3:/home/mauricio/.rvm/gems/ruby-2.7.3@global",
                 "RUBY_VERSION": "ruby-2.7.3"
             }
           }
