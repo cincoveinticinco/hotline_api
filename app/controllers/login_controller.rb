@@ -75,12 +75,12 @@ class LoginController < ApplicationController
                             :domain => :all
                         }
 
-                        redirect_to("#{URL_FRONT}/admin-home") #logintoken
+                        redirect_to("#{URL_FRONT}/admin/admin-home") #logintoken
                     else
-                        redirect_to("#{URL_FRONT}/UserNot") #User not found
+                        redirect_to("#{URL_FRONT}/admin/UserNot") #User not found
                     end
                 else
-                    redirect_to("#{URL_FRONT}/UserNot") #Email gmail error
+                    redirect_to("#{URL_FRONT}/admin/UserNot") #Email gmail error
                 end
             end
         end
