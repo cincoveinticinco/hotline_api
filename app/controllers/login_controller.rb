@@ -75,7 +75,7 @@ class LoginController < ApplicationController
                             :domain => :all
                         }
 
-                        redirect_to("#{URL_FRONT}/admin/home") #logintoken
+                        redirect_to("#{URL_FRONT}/admin-home") #logintoken
                     else
                         redirect_to("#{URL_FRONT}/UserNot") #User not found
                     end
@@ -108,8 +108,8 @@ class LoginController < ApplicationController
     end
     private
     def url_google
-        url_google = request.protocol + request.host_with_port
-        url_google + '/login/googleLogin'
+        # url_google = request.protocol + request.host_with_port
+        url_google = 'https://api.hotline.report/login/googleLogin'
     end
     def encode_token(user, token)
         user.update(token: token, token_last_update: DateTime.now)
