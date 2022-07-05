@@ -75,7 +75,7 @@ class LoginController < ApplicationController
                             :domain => :all
                         }
 
-                        redirect_to("#{URL_FRONT}/admin-home") #logintoken
+                        redirect_to("#{URL_FRONT}/admin/home") #logintoken
                     else
                         redirect_to("#{URL_FRONT}/UserNot") #User not found
                     end
