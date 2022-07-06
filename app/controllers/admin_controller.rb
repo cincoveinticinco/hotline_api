@@ -77,6 +77,7 @@ class AdminController < ApplicationController
 		pr.p_season = params['p_season']
 		pr.center_id = params['center_id']
 		pr.location_id = checkLocation(params['location_name'])
+		pr.production_company = checkLocation(params['production_company'])
 		pr.save
 		alias_added = []
 		users_added = []

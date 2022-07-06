@@ -5,7 +5,6 @@ Rails.application.routes.draw do
 			post :submitAnswer
 			post :createPassword
 			get :getProjectName
-			post :DeleteReply
 		end
 		namespace :admin do
 			get :listReports
@@ -27,7 +26,7 @@ Rails.application.routes.draw do
 		namespace :report do
 			post :infoReport
 			post :replyReport
-			post :deleteReply
+			post :DeleteReply
 		end
 	end
 end
