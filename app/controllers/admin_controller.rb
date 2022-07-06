@@ -89,12 +89,11 @@ class AdminController < ApplicationController
 		params['users'].each do |us|
 			exu = User.find_by(email: us)
 			if exu.blank?
-				exu = User.create(email: us, user_type_id:1)
+				exu = User.create(email: us, user_type_id:2)
 				exu = UserHasProject.create(user_id: exu.id, project_id:pr.id)
-				
 				# ACA DEBE MANDAR MAIL DE nuevo usurio
 			elsif exu.user_type_id == 1
-				msg = us.to_s + ' ' + 'is a General user and cannot be added to this project'
+				msg = user.to_s + ' ' + 'is a General user and cannot be added to this project'
 				errors.push(msg)
 			else
 				if UserHasProject.find_by(user_id: exu.id, project_id:pr.id).blank?

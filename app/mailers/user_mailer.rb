@@ -21,15 +21,23 @@ class UserMailer < ApplicationMailer
         mails.push(report.r_email)
         send_email(mails, subject, htmlbody) unless report.r_email.blank?
     end
-    def replyToAdmin(report)
+    def replyToAdmin(report_send)
+        report = Report.all_reports_list().where(id: report_send.id).take
         subject = "TEST HOTLINE"
+
         responses = RReply.reportReplies.where(report_id: report.id)
         incident = Answer.where(report_id: report.id, question_id: 13).take
         
         
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_admin.html.erb', :layout => false, :locals => { :incident => incident, :responses => responses, :report_id=>report.id })
         mails = []
-        users = User.where('user_type_id=1').where("send_email = true")
+        # 
+        if report.center_id.nil?
+            users = User.allUsers().where('user_type_id=1').where("send_email = true")
+        else
+            users = UserHasCenter.get_all(center_id)
+        end
+        
         users.each do |user|
             mails.push(user['email'])
         end
@@ -54,7 +62,12 @@ class UserMailer < ApplicationMailer
         end
         htmlbody = render_to_string(:partial =>  'user_mailer/new_report_admin.html.erb', :layout => false, :locals => { :report => report, :question_response =>question_response })
         mails = []
-        users = User.where('user_type_id = 1').where("send_email = true")
+        if report.center_id.nil?
+            users = User.where('user_type_id = 1').where("send_email = true")
+        else
+            users = User.allUsers.where('user_type_id = 1').where("send_email = true").where('center_id is null or center_id = ?', report.center_id)
+        end
+        
         users.each do |user|
             mails.push(user['email'])
         end
