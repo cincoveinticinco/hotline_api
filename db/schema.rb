@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_01_205021) do
+ActiveRecord::Schema.define(version: 2022_07_06_022501) do
 
   create_table "answers", charset: "utf8", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_205021) do
     t.string "last_name"
     t.bigint "user_type_id", null: false
     t.string "email"
+    t.boolean "send_email", default: false
     t.string "token"
     t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false

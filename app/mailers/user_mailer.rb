@@ -29,7 +29,7 @@ class UserMailer < ApplicationMailer
         
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_admin.html.erb', :layout => false, :locals => { :incident => incident, :responses => responses, :report_id=>report_id })
         mails = []
-        users = User.where('user_type_id=1')
+        users = User.where('user_type_id=1').where("send_email = true")
         users.each do |user|
             mails.push(user['email'])
         end
@@ -54,7 +54,7 @@ class UserMailer < ApplicationMailer
         end
         htmlbody = render_to_string(:partial =>  'user_mailer/new_report_admin.html.erb', :layout => false, :locals => { :report => report, :question_response =>question_response })
         mails = []
-        users = User.where('user_type_id=1')
+        users = User.where('user_type_id = 1').where("send_email = true")
         users.each do |user|
             mails.push(user['email'])
         end
