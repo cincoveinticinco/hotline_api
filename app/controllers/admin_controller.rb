@@ -12,6 +12,7 @@ class AdminController < ApplicationController
 		new_estatus = 5 if params['to_close'] == true
 
 		report = Report.find(params['report_id'])
+		RReply.update(r_type_id: new_estatus)
 		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 
 		render :json => {
@@ -27,10 +28,14 @@ class AdminController < ApplicationController
 	end
 	def DeleteReply
 		text = 'Message deleted by user'
-		RReply.find(params['id']).update(reply_txt: text)
+		reply = RReply.find(params['id'])
+		report = Report.find(reply.report_id)
+		text = 'Mesaje eliminado por el usuario' if report.language_id == 2
+		text = 'Mensagem excluída pelo usuário' if report.language_id == 3
+		reply.update(reply_txt: text)
 		render :json => {
 			:error => false,
-			:msg => 'replu succesfully deleted'
+			:msg => 'reply succesfully deleted'
 		}
 	end
 	def listReports

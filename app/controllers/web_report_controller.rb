@@ -21,7 +21,6 @@ class WebReportController < ApplicationController
 				:p_season => project.p_season
 			}
 		end
-		
 	end
 	def submitAnswer
 		answers = params['answers']
