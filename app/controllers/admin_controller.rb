@@ -12,7 +12,7 @@ class AdminController < ApplicationController
 		new_estatus = 5 if params['to_close'] == true
 
 		report = Report.find(params['report_id'])
-		RReply.update(r_type_id: new_estatus)
+		report.update(r_status_id: new_estatus)
 		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 
 		render :json => {
