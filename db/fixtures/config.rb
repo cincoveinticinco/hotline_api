@@ -27,7 +27,7 @@ RStatus.seed do |s|
 end
 RStatus.seed do |s|
   s.id = 3
-  s.r_status_txt = "Respond to reporte"
+  s.r_status_txt = "Respond to reporter"
 end
 RStatus.seed do |s|
   s.id = 4

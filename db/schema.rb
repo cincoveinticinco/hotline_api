@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_01_205021) do
+ActiveRecord::Schema.define(version: 2022_07_06_042512) do
 
   create_table "answers", charset: "utf8", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -137,6 +137,15 @@ ActiveRecord::Schema.define(version: 2022_07_01_205021) do
     t.index ["r_type_id"], name: "index_reports_on_r_type_id"
   end
 
+  create_table "user_has_centers", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "center_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["center_id"], name: "index_user_has_centers_on_center_id"
+    t.index ["user_id"], name: "index_user_has_centers_on_user_id"
+  end
+
   create_table "user_has_projects", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
@@ -157,6 +166,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_205021) do
     t.string "last_name"
     t.bigint "user_type_id", null: false
     t.string "email"
+    t.boolean "send_email", default: false
     t.string "token"
     t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
@@ -180,6 +190,8 @@ ActiveRecord::Schema.define(version: 2022_07_01_205021) do
   add_foreign_key "reports", "r_methods"
   add_foreign_key "reports", "r_statuses"
   add_foreign_key "reports", "r_types"
+  add_foreign_key "user_has_centers", "centers"
+  add_foreign_key "user_has_centers", "users"
   add_foreign_key "user_has_projects", "projects"
   add_foreign_key "user_has_projects", "users"
   add_foreign_key "users", "user_types"

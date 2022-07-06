@@ -12,6 +12,7 @@ class AdminController < ApplicationController
 		new_estatus = 5 if params['to_close'] == true
 
 		report = Report.find(params['report_id'])
+		RReply.update(r_type_id: new_estatus)
 		UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 
 		render :json => {
@@ -27,10 +28,14 @@ class AdminController < ApplicationController
 	end
 	def DeleteReply
 		text = 'Message deleted by user'
-		RReply.find(params['id']).update(reply_txt: text)
+		reply = RReply.find(params['id'])
+		report = Report.find(reply.report_id)
+		text = 'Mesaje eliminado por el usuario' if report.language_id == 2
+		text = 'Mensagem excluída pelo usuário' if report.language_id == 3
+		reply.update(reply_txt: text)
 		render :json => {
 			:error => false,
-			:msg => 'replu succesfully deleted'
+			:msg => 'reply succesfully deleted'
 		}
 	end
 	def listReports
@@ -84,12 +89,11 @@ class AdminController < ApplicationController
 		params['users'].each do |us|
 			exu = User.find_by(email: us)
 			if exu.blank?
-				exu = User.create(email: us, user_type_id:1)
+				exu = User.create(email: us, user_type_id:2)
 				exu = UserHasProject.create(user_id: exu.id, project_id:pr.id)
-				
 				# ACA DEBE MANDAR MAIL DE nuevo usurio
 			elsif exu.user_type_id == 1
-				msg = us.to_s + ' ' + 'is a General user and cannot be added to this project'
+				msg = user.to_s + ' ' + 'is a General user and cannot be added to this project'
 				errors.push(msg)
 			else
 				if UserHasProject.find_by(user_id: exu.id, project_id:pr.id).blank?
