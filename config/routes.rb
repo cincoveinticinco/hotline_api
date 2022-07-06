@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 		namespace :report do
 			post :infoReport
 			post :replyReport
+			post :deleteReply
 		end
 	end
 end

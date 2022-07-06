@@ -12,10 +12,16 @@ class ReportController < ApplicationController
 		}
 	end
     def replyReport
-        RReply.create(report_id: @report.id, reply_txt: params[:reply_txt])
+        RReply.create(report_id: @report.id, reply_txt: params[:reply_txt]) unless params[:id]
+		RReply.find(params[:id]).update(reply_txt: params[:reply_txt]) if params[:id]
 		UserMailer.replyToAdmin(@report).deliver_later
-        render :json => { :error => false, :msg => 'Reply succesfully saved succesfully created' }
+        render :json => { :error => false, :msg => 'Reply succesfully saved' }
     end
+	def deleteReply
+		RReply.find(params[:id]).destroy
+        render :json => { :error => false, :msg => 'Reply succesfully deleted' }
+	end
+
     private
 	def validateToken
 		require 'jwt'

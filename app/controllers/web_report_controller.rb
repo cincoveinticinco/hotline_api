@@ -67,6 +67,8 @@ class WebReportController < ApplicationController
 			:report_followup => rp.r_reference	
 		}
 	end
+	
+
 	def createPassword
 		rp = Report.find_by(id: params['report_id'],r_reference: params['report_followup'] )
 		rp.update(password: params['password'])
@@ -75,5 +77,4 @@ class WebReportController < ApplicationController
 			:msg => 'Password succesfully saved'
 		}
 	end
-	
 end

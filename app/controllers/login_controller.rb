@@ -24,7 +24,7 @@ class LoginController < ApplicationController
         #     size: 120
         #   )
         # IO.binwrite("tmp/github-qrcode.png", png.to_s)
-        # render :json => { :url => url, :qrcode => qrcode }
+        
     end
 	def sendToken
         email = params[:email]
