@@ -25,17 +25,8 @@ class ReportController < ApplicationController
 		}
 	end
     def replyReport
-<<<<<<< HEAD
         RReply.create(report_id: @report.id, reply_txt: params[:reply_txt]) unless params[:id]
 		RReply.find(params[:id]).update(reply_txt: params[:reply_txt]) if params[:id]
-=======
-    	if params[:id].blank?
-    		RReply.create(report_id: @report.id, reply_txt: params[:reply_txt])
-    	else
-    		RReply.find(params[:id]).update(reply_txt: params[:reply_txt])
-    	end
-        
->>>>>>> 001c86d0d9ac122dc341d1624cd6a3973bdee1b4
 		UserMailer.replyToAdmin(@report).deliver_later
         render :json => { :error => false, :msg => 'Reply succesfully saved' }
     end
