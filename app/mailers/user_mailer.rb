@@ -80,10 +80,16 @@ class UserMailer < ApplicationMailer
         
         send_email(mails, subject, htmlbody)
     end
-    def sendEmailReports(reports)
+    def sendEmailReports(email, reports, url)
+        require 'jwt'
         subject = "Welcome email"
-        htmlbody = render_to_string(:partial =>  'user_mailer/send_link_reports.html.erb', :layout => false, :locals => { :reports => reports })
-        send_email(report.r_email, subject, htmlbody)
+        links = []
+        reports.each do |report|
+            payload = { id: report['id'], reference: report['r_reference']}
+            links.push(JWT.encode(payload, Rails.application.credentials.secret_key_base, 'HS256'))
+        end
+        htmlbody = render_to_string(:partial =>  'user_mailer/send_link_reports.html.erb', :layout => false, :locals => { :links => links, :url => url })
+        send_email([email], subject, htmlbody)
     end
     private 
     def send_email (receiver, subject, htmlbody)
