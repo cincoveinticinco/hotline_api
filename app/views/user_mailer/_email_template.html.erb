@@ -1,10 +1,65 @@
-<!Doctype html>
-<html lang="en-US">
-    <head> 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOTLINE</title>
     </head>
     <body>
-        <h1>Welcome to Hotline </h1>
-        <p align="left"> Token <%= token %>,</p>
+        <table align="center" cellpadding="0" cellspacing="0"
+            style="margin: 10px auto;
+                min-width: 320px;
+                max-width: 540px;
+                width: 100%;
+                font-family: Helvetica, sans-serif;
+                border: 2px solid #11888c;
+                border-top: 15px solid #11888c;">
+            <tbody>
+                <tr>
+                    <td style="border-bottom: 1px solid #11888c;">
+                        <p style="font-size: 29px; margin: 20px;"><span style="color: #11888c; font-weight: bold;">HOTLINE</span>REPORT</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 20px;">
+                        <p style="font-size: 12px;">Hi <span style="font-weight: bold;">Adrés González</span>,</p>
+                        <p style="font-size: 12px;">This is your token to access <span style="font-weight: bold;">Hotline&#169:</span></p>
+                        <p style="font-size: 12px;">It will be valid for the next 20 minutes.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; text-transform: uppercase;">
+                        <p style="font-size: 34px;
+                            margin: 10px auto;
+                            background-color: #ebebeb;
+                            padding: 20px;
+                            width: 70%;
+                            color: #11888c;
+                            font-weight: bold;"><%=token%></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; padding: 20px;">
+                    <a href="https://hotline.report/admin/" target="_blank" style="font-size: 16px;width: 75%; margin: 10px auto; color: #11888c;">Click here to access your account</p>
+                        </a>
+                </tr>
+                <tr>
+                    <td style="padding: 0 20px;">
+                        <p style="font-size: 12px;">Thanks,</p>
+                        <p style="font-size: 12px;"><span style="font-weight: bold;">Hotline&#169:</span> Team</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;
+                    text-transform: uppercase;
+                    font-size: 11px;
+                    background-color: #ffffff;
+                    padding-bottom: 10px;">
+                                <p style="color: #11888c; font-weight: bold;">LEGAL TERMS | DATA POLICY</p>
+                                <p style="width: 50%; margin: auto;">COPYRIGHT © 2022 GRUPO CINCOVEINTICINCO SAS. ALL RIGTHS RESERVED</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>

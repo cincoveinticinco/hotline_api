@@ -3,7 +3,29 @@ class LoginController < ApplicationController
     require 'date'
     require 'uri'
     require 'net/http'
+    include ActionController::Cookies
 
+    def index
+        # require "rqrcode"
+        # project = Project.find(1)
+        # url = "#{request.protocol}#{request.host_with_port}/home/#{project.p_abbreviation}-#{project.p_season}"
+        # qrcode = RQRCode::QRCode.new(url)
+        # project.p_abbreviation
+        # png = qrcode.as_png(
+        #     bit_depth: 1,
+        #     border_modules: 4,
+        #     color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+        #     color: "black",
+        #     file: nil,
+        #     fill: "white",
+        #     module_px_size: 6,
+        #     resize_exactly_to: false,
+        #     resize_gte_to: false,
+        #     size: 120
+        #   )
+        # IO.binwrite("tmp/github-qrcode.png", png.to_s)
+        
+    end
 	def sendToken
         email = params[:email]
         user = User.find_by(email: email)
@@ -36,17 +58,18 @@ class LoginController < ApplicationController
             "https://www.googleapis.com/auth/userinfo.profile",
             "https://www.googleapis.com/auth/userinfo.email"
         ].join(" ")
-        data = [ Rails.application.credentials.gp_client_id, scope, url_google ]
+        data = [ Rails.application.credentials.google[:gp_client_id], scope, url_google ]
         url = "https://accounts.google.com/o/oauth2/auth?client_id=%s&response_type=code&scope=%s&redirect_uri=%s&state=google" % data
         redirect_to url
     end
     def googleLogin
+       
         prms = {
             'grant_type': 'authorization_code',
             'code': params[:code],
             'redirect_uri': url_google,
-            'client_id': Rails.application.credentials.gp_client_id,
-            'client_secret': Rails.application.credentials.gp_client_secret
+            'client_id': Rails.application.credentials.google[:gp_client_id],
+            'client_secret': Rails.application.credentials.google[:gp_client_secret]
         }
         url = URI('https://accounts.google.com/o/oauth2/token')
         response = Net::HTTP.post_form(url, prms)
@@ -56,7 +79,9 @@ class LoginController < ApplicationController
             access_token = JSON.parse(body)["access_token"]
             url.query = URI.encode_www_form({'access_token': access_token})
             response = Net::HTTP.get_response(url)
+           
             if response.is_a?(Net::HTTPSuccess)
+               
                 body = response.body
                 user_data = JSON.parse(body)
                 email = user_data["email"]
@@ -65,12 +90,17 @@ class LoginController < ApplicationController
                     if user
                         token = 6.times.map{rand(10)}.join
                         token = encode_token(user, token)
-                        redirect_to("/#{token}") #logintoken
+                        cookies[:hotline] = {
+                            :value => token,
+                            :domain => :all
+                        }
+
+                        redirect_to("#{URL_FRONT}admin/admin-home") #logintoken
                     else
-                        redirect_to('/') #User not found
+                        redirect_to("#{URL_FRONT}admin/UserNot") #User not found
                     end
                 else
-                    redirect_to('/') #Email gmail error
+                    redirect_to("#{URL_FRONT}admin/UserNot") #Email gmail error
                 end
             end
         end
@@ -99,8 +129,8 @@ class LoginController < ApplicationController
     
     private
     def url_google
-        url_google = request.protocol + request.host_with_port
-        url_google + '/login/googleLogin'
+        # url_google = request.protocol + request.host_with_port
+        url_google = 'https://api.hotline.report/login/googleLogin'
     end
     def encode_token(user, token)
         user.update(token: token, token_last_update: DateTime.now)

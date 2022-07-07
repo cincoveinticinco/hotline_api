@@ -4,13 +4,17 @@ Rails.application.routes.draw do
 		namespace :web_report do
 			post :submitAnswer
 			post :createPassword
+			get :getProjectName
 		end
 		namespace :admin do
 			get :listReports
 			get :getReportDetail
 			get :getProjects
-			post :addReportReply
 			post :newProject
+			post :DeleteReply
+			get :getUser
+			post :addReportReply
+			post :changeStatusreport
 		end
 		namespace :login do
 			post :sendToken
@@ -18,10 +22,12 @@ Rails.application.routes.draw do
 			get :getGoogleRoute
 			get :googleLogin
 			post :loginReport
+			get :index
 		end
 		namespace :report do
 			post :infoReport
 			post :replyReport
+			post :DeleteReply
 		end
 	end
 end

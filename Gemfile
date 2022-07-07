@@ -8,7 +8,7 @@ gem 'rails', '~> 6.1.6'
 # Use sqlite3 as the database for Active Record
 gem 'mysql2'
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 3.11'
 gem 'seed-fu', '~> 2.3', '>= 2.3.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
@@ -24,8 +24,7 @@ gem 'seed-fu', '~> 2.3', '>= 2.3.5'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -43,3 +42,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'jwt'
 gem 'aws-sdk-ses'
 gem 'bcrypt', '~> 3.1.7'
+gem 'rqrcode'

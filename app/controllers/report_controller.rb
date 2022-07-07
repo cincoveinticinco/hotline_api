@@ -11,11 +11,30 @@ class ReportController < ApplicationController
 			:replies => replies
 		}
 	end
+	def DeleteReply
+		text = 'Message deleted by user'
+		reply = RReply.find(params['id'])
+		report = Report.find(reply.report_id)
+		text = 'Mesaje eliminado por el usuario' if report.language_id == 2
+		text = 'Mensagem excluída pelo usuário' if report.language_id == 3
+		reply.update(reply_txt: text)
+
+		render :json => {
+			:error => false,
+			:msg => 'reply succesfully deleted'
+		}
+	end
     def replyReport
-        RReply.create(report_id: @report.id, reply_txt: params[:reply_txt])
+        RReply.create(report_id: @report.id, reply_txt: params[:reply_txt]) unless params[:id]
+		RReply.find(params[:id]).update(reply_txt: params[:reply_txt]) if params[:id]
 		UserMailer.replyToAdmin(@report).deliver_later
-        render :json => { :error => false, :msg => 'Reply succesfully saved succesfully created' }
+        render :json => { :error => false, :msg => 'Reply succesfully saved' }
     end
+	def deleteReply
+		RReply.find(params[:id]).destroy
+        render :json => { :error => false, :msg => 'Reply succesfully deleted' }
+	end
+
     private
 	def validateToken
 		require 'jwt'

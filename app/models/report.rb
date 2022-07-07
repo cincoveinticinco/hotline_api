@@ -6,7 +6,8 @@ class Report < ApplicationRecord
   has_secure_password :validations => false
 
   def self.all_reports_list
-  	Report.select("reports.*, r_types.r_type_txt, r_methods.r_method_txt, r_statuses.r_status_txt, projects.p_name, projects.p_season, centers.center_name")
+  	Report.select("reports.*, r_types.r_type_txt, r_methods.r_method_txt, r_statuses.r_status_txt, projects.p_name, projects.p_season, projects.center_id, centers.center_name, projects.production_company")
+  	.select("case when projects.p_season is not null then concat(projects.p_name, '. S', projects.p_season) else projects.p_name end as p_name" )
   	.select("
   	 	(	SELECT 
 	            q_options.q_option_title
@@ -18,6 +19,16 @@ class Report < ApplicationRecord
 	                AND answers.question_id = 10
 	        LIMIT 1
 	    ) AS Incident_type,
+			(	SELECT 
+				q_options.id
+			FROM
+				answers
+			INNER JOIN q_options ON q_options.id = answers.q_option_id
+			WHERE
+				reports.id = answers.report_id
+					AND answers.question_id = 10
+			LIMIT 1
+		) AS incident_type_id,
         (	SELECT 
 	            answers.a_txt
 	        FROM
