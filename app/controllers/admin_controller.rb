@@ -15,13 +15,8 @@ class AdminController < ApplicationController
 
 		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
 		report = Report.find(params['report_id'])
-		puts "///////////////"
-		puts "params['action']"
-		puts params['action'].to_s
-		puts "params['action']"
-		puts params['action'].to_s
 
-		case params['action'].to_i
+		case params['action_status'].to_i
 			when 1 then new_estatus = report.r_status_id
 			when 2 then
 				new_estatus = 4
