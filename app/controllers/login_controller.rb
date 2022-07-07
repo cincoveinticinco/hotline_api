@@ -96,6 +96,7 @@ class LoginController < ApplicationController
             }
         end
     end
+    
     private
     def url_google
         url_google = request.protocol + request.host_with_port

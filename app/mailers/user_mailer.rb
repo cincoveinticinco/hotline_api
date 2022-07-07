@@ -28,6 +28,11 @@ class UserMailer < ApplicationMailer
         htmlbody = render_to_string(:partial =>  'user_mailer/new_report_admin.html.erb', :layout => false, :locals => { :data => data })
         send_email(report.r_email, subject, htmlbody)
     end
+    def sendEmailReports(reports)
+        subject = "Welcome email"
+        htmlbody = render_to_string(:partial =>  'user_mailer/send_link_reports.html.erb', :layout => false, :locals => { :reports => reports })
+        send_email(report.r_email, subject, htmlbody)
+    end
     private 
     def send_email (receiver, subject, htmlbody)
         region = "us-west-2"
