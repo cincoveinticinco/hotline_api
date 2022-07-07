@@ -27,14 +27,18 @@ RStatus.seed do |s|
 end
 RStatus.seed do |s|
   s.id = 3
-  s.r_status_txt = "Respond to reporter"
+  s.r_status_txt = "Under review"
 end
 RStatus.seed do |s|
   s.id = 4
-  s.r_status_txt = "To review"
+  s.r_status_txt = "More information needed"
 end
 RStatus.seed do |s|
   s.id = 5
+  s.r_status_txt = "To review"
+end
+RStatus.seed do |s|
+  s.id = 6
   s.r_status_txt = "Closed"
 end
 #REPORT TYPES
