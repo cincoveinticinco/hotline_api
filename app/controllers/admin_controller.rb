@@ -179,7 +179,7 @@ class AdminController < ApplicationController
 		id = params[:id]
 		abbreviation = params[:abbreviation]
         project = Project.find_by(id: params[:id], p_abbreviation: abbreviation)
-        url = "#{request.protocol}#{request.host_with_port}/home/#{project.p_abbreviation}"
+        url = "https://hotline.report/home/#{project.p_abbreviation}"
         qrcode = RQRCode::QRCode.new(url)
         project.p_abbreviation
         png = qrcode.as_png(
