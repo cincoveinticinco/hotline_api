@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-	before_action :validateToken
+	before_action :validateToken, except: [ :getQrCode ]
 
 	def deleteProject
 		ProjectAlias.where(project_id: params['id']).destroy_all
@@ -176,7 +176,9 @@ class AdminController < ApplicationController
 	end
 	def getQrCode
 		require "rqrcode"
-        project = Project.find(params[:project_id])
+		id = params[:id]
+		abbreviation = params[:abbreviation]
+        project = Project.find_by(id: params[:id], p_abbreviation: abbreviation)
         url = "#{request.protocol}#{request.host_with_port}/home/#{project.p_abbreviation}"
         qrcode = RQRCode::QRCode.new(url)
         project.p_abbreviation
