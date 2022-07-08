@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 			post :addReportReply
 			post :changeStatusreport
 			post :deleteProject
-			post :getQrCode
+			get :getQrCode
 		end
 		namespace :login do
 			post :sendToken
