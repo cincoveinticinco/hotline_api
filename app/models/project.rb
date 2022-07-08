@@ -18,7 +18,7 @@ class Project < ApplicationRecord
             ), ',', users.email
             )
              
-        separator ';') as users
+        separator ';') as users_detail
       ")
     .select("count(distinct case when reports.r_status_id != 6 then reports.id end) as open_reports")
     .select("count(distinct case when reports.r_status_id = 6 then reports.id end) as closed_reports")
