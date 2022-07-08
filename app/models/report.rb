@@ -7,7 +7,7 @@ class Report < ApplicationRecord
 
   def self.all_reports_list
   	Report.select("
-  		reports.id, reports.language_id, reports.r_type_id, reports.r_method_id, reports.r_status_id, reports.project_id, reports.r_reference, reports.created_at,
+  		reports.id, reports.language_id, reports.r_type_id, reports.r_method_id, reports.r_status_id, reports.project_id, reports.r_reference, reports.created_at, 
   		r_types.r_type_txt,
   		r_methods.r_method_txt,
   		r_statuses.r_status_txt,
@@ -90,8 +90,8 @@ class Report < ApplicationRecord
 			inner join 
 				users ON users.id = user_id
 			WHERE
-			    report_id = 36
-  		) as users_assigned")
+			    report_id = reports.id
+  		) as users_assigned", )
   	.joins(:r_type,
   			:r_method, :r_status)
   	.joins("left join projects ON projects.id = reports.project_id")
