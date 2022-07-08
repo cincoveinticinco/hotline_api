@@ -1,6 +1,15 @@
 class AdminController < ApplicationController
 	before_action :validateToken
 
+	def deleteProject
+		ProjectAlias.where(project_id: params['id']).destroy_all
+		UserHasProject.where(project_id: params['id']).destroy_all
+		Project.find(params['id']).destroy
+		render :json => {
+			:error => false,
+			:msg => 'Project succesfully deleted'
+		}
+	end
 	def changeStatusreport
 		Report.find(params['id']).update(r_status_id: params['status'])
 		render :json => {

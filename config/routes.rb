@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 			post :createPassword
 			get :getProjectName
 			post :sendEmailToken
+			post :deleteProject
 		end
 		namespace :admin do
 			get :listReports
