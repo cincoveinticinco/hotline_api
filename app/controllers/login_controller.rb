@@ -130,7 +130,9 @@ class LoginController < ApplicationController
     
     private
     def url_google
-        # url_google = request.protocol + request.host_with_port
+        url_google = request.protocol + request.host_with_port
+        p '----------------------'
+        p url_google
         url_google = 'https://api.hotline.report/login/googleLogin'
     end
     def encode_token(user, token)
