@@ -76,4 +76,20 @@ class WebReportController < ApplicationController
 			:msg => 'Password succesfully saved'
 		}
 	end
+	def sendEmailToken
+		reports = Report.where(r_email: params[:email]).as_json
+		unless reports.empty?
+			url = request.protocol + request.host_with_port
+			UserMailer.sendEmailReports(params[:email], reports, url).deliver_later
+			render :json => {
+				:error => false,
+				:msg => 'Email succesfully sended'
+			}
+		else
+			render :json => {
+				:error => true,
+				:msg => 'Email not found'
+			}
+		end
+	end
 end

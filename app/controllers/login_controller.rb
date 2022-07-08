@@ -92,7 +92,8 @@ class LoginController < ApplicationController
                         token = encode_token(user, token)
                         cookies[:hotline] = {
                             :value => token,
-                            :domain => :all
+                            :domain => :all,
+                            :expires => 1.day.from_now
                         }
 
                         redirect_to("#{URL_FRONT}admin/admin-home") #logintoken
@@ -126,6 +127,7 @@ class LoginController < ApplicationController
             }
         end
     end
+    
     private
     def url_google
         # url_google = request.protocol + request.host_with_port
