@@ -78,66 +78,80 @@ class AdminController < ApplicationController
 	end	
 	def newProject
 		errors = []
+		epr = nil
 		if params['id'].blank?
-			pr = Project.new
-		else
-			pr = Project.find(params['id'])
-		end
-		pr.p_name = params['p_name']
-		pr.p_abbreviation = params['p_abbreviation']
-		pr.p_season = params['p_season']
-		pr.center_id = params['center_id']
-		pr.location_id = checkLocation(params['location_name'])
-		pr.production_company = params['production_company']
-		pr.save
-		alias_added = []
-		users_added = []
-
-		params['alias'].each do |al|
-			tnal = ProjectAlias.find_by(project_id: pr.id, p_alias: al)
-			tnal = ProjectAlias.create(project_id: pr.id, p_alias: al) if tnal.blank?
-			alias_added.push(tnal.id)
-		end unless params['alias'].blank?
-		params['users'].each do |us|
-			exu = User.find_by(email: us)
-			if exu.blank?
-				exu = User.create(email: us, user_type_id:2, send_email:true)
-				euhp = UserHasProject.create(user_id: exu.id, project_id:pr.id)
-				# ACA DEBE MANDAR MAIL DE nuevo usurio
-			elsif exu.user_type_id == 1
-				error = {
-					msg_eng: exu.email.to_s + ' ' + 'is a general user and cannot be added to this project',
-					msg_esp: exu.email.to_s + ' ' + 'es un usuario general y no puede ser agregado al proyecto',
-					msg_prt: exu.email.to_s + ' ' + 'é um usuário geral e não pode ser adicionado ao projeto'
-				}
-				errors.push(error)
-				
-			else
-				euhp = UserHasProject.find_by(user_id: exu.id, project_id:pr.id)
-				if euhp.blank?
-					# ACA DEBE MANDAR MAIL DE nuevo usurio
-					euhp = UserHasProject.create(user_id: exu.id, project_id:pr.id)
-				end
-
-			end
-			users_added.push(euhp.id) unless euhp.blank?
+			epr = Project.find_by(p_name: params['p_name'], p_season: params['p_season'], center_id: params['center_id'])
 		end
 
-		UserHasProject.where(project_id: pr.id).where('id not in (?)', users_added).destroy_all
-		UserHasProject.where(project_id: pr.id).destroy_all if users_added.length == 0
-		ProjectAlias.where(project_id: pr.id).where('id not in (?)', alias_added).destroy_all
-		ProjectAlias.where(project_id: pr.id).destroy_all if alias_added.length == 0
-
-		if errors.length > 0
+		if !epr.blank?
+			error = {
+				msg_eng: 'This project already exists',
+				msg_esp: 'Este proyecto ya existe',
+				msg_prt: 'Este projeto já existe'
+			}
+			errors.push(error)
 			render :json => {
 				:error => true,
 				:errors => errors
 			}
 		else
-			render :json => {
-				:error => false,
-				:msg => 'project succesfully created'
-			}
+			if params['id'].blank?
+				pr = Project.new
+			else
+				pr = Project.find(params['id'])
+			end
+			pr.p_name = params['p_name']
+			pr.p_abbreviation = params['p_abbreviation']
+			pr.p_season = params['p_season']
+			pr.center_id = params['center_id']
+			pr.location_id = checkLocation(params['location_name'])
+			pr.production_company = params['production_company']
+			pr.save
+			alias_added = []
+			users_added = []
+
+			params['alias'].each do |al|
+				tnal = ProjectAlias.find_by(project_id: pr.id, p_alias: al)
+				tnal = ProjectAlias.create(project_id: pr.id, p_alias: al) if tnal.blank?
+				alias_added.push(tnal.id)
+			end unless params['alias'].blank?
+			params['users'].each do |us|
+				exu = User.find_by(email: us)
+				if exu.blank?
+					exu = User.create(email: us, user_type_id:2, send_email:true)
+					euhp = UserHasProject.create(user_id: exu.id, project_id:pr.id)
+					# ACA DEBE MANDAR MAIL DE nuevo usurio
+				elsif exu.user_type_id == 1
+					error = {
+						msg_eng: exu.email.to_s + ' ' + 'is a general user and cannot be added to this project',
+						msg_esp: exu.email.to_s + ' ' + 'es un usuario general y no puede ser agregado al proyecto',
+						msg_prt: exu.email.to_s + ' ' + 'é um usuário geral e não pode ser adicionado ao projeto'
+					}
+					errors.push(error)
+				else
+					euhp = UserHasProject.find_by(user_id: exu.id, project_id:pr.id)
+					if euhp.blank?
+						# ACA DEBE MANDAR MAIL DE nuevo usurio
+						euhp = UserHasProject.create(user_id: exu.id, project_id:pr.id)
+					end
+				end
+				users_added.push(euhp.id) unless euhp.blank?
+			end
+			UserHasProject.where(project_id: pr.id).where('id not in (?)', users_added).destroy_all
+			UserHasProject.where(project_id: pr.id).destroy_all if users_added.length == 0
+			ProjectAlias.where(project_id: pr.id).where('id not in (?)', alias_added).destroy_all
+			ProjectAlias.where(project_id: pr.id).destroy_all if alias_added.length == 0
+			if errors.length > 0
+				render :json => {
+					:error => true,
+					:errors => errors
+				}
+			else
+				render :json => {
+					:error => false,
+					:msg => 'project succesfully created'
+				}
+			end
 		end
 	end
 	def getReportDetail
