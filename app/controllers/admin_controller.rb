@@ -174,7 +174,28 @@ class AdminController < ApplicationController
 			:replies => replies
 		}
 	end
-
+	def getQrCode
+		require "rqrcode"
+        project = Project.find(params[:project_id])
+        url = "#{request.protocol}#{request.host_with_port}/home/#{project.p_abbreviation}"
+        qrcode = RQRCode::QRCode.new(url)
+        project.p_abbreviation
+        png = qrcode.as_png(
+            bit_depth: 1,
+            border_modules: 4,
+            color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+            color: "black",
+            file: nil,
+            fill: "white",
+            module_px_size: 6,
+            resize_exactly_to: false,
+            resize_gte_to: false,
+            size: 120
+          )
+        route = "tmp/qrcode.png"
+        IO.binwrite(route, png.to_s)
+        send_file(route, filename: "qrcode.png", type: "image/png")
+	end
 	private
 	def validateToken
 		require 'jwt'
