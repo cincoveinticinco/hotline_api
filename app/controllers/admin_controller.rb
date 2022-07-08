@@ -196,7 +196,7 @@ class AdminController < ApplicationController
           )
         route = "tmp/qrcode.png"
         IO.binwrite(route, png.to_s)
-        send_file(route, filename: "qrcode.png", type: "image/png")
+        send_file(route, filename: "qrcode-#{project.p_abbreviation}.png", type: "image/png")
 	end
 	private
 	def validateToken
