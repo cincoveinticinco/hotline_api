@@ -143,7 +143,7 @@ class AdminController < ApplicationController
 	def getReportDetail
 		report = Report.all_reports_list().where(id: params['report_id']).take
 		answers = Answer.reportAnswers().where(report_id: params['report_id'])
-		replies = RReply.reportReplies().where(report_id: params['report_id'])
+		replies = RReply.reportReplies().select("users.email").where(report_id: params['report_id'])
 		render :json => {
 			:error => false,
 			:report => report,
