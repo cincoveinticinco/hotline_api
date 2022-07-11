@@ -5,6 +5,7 @@ class AdminController < ApplicationController
 		ProjectAlias.where(project_id: params['id']).destroy_all
 		UserHasProject.where(project_id: params['id']).destroy_all
 		Project.find(params['id']).destroy
+		
 		render :json => {
 			:error => false,
 			:msg => 'Project succesfully deleted'
@@ -43,7 +44,8 @@ class AdminController < ApplicationController
 	def getUser
 		render :json => {
 			:error => false,
-			:user => @user.id
+			:user => @user.id,
+			:user_type_id => @user.user_type_id
 		}
 	end
 	def DeleteReply
@@ -59,10 +61,18 @@ class AdminController < ApplicationController
 		}
 	end
 	def listReports
-		reports = Report.all_reports_list()
-		centers = Center.all()
+		if @user.user_type_id == 1
+			reports = Report.all_reports_list().where("center_id in (?)", @ass_centers)
+			centers = Center.where("id in (?)", @ass_centers)
+			projects = Project.where("center_id in (?)", @ass_centers)
+		elsif @user.user_type_id == 2
+			reports = Report.all_reports_list().where("reports.project_id in (?)", @ass_projects)
+			centers = nil
+			projects =  Project.where("id in (?)", @ass_projects)
+		end
+		
+		
 		incident_types = QOption.where(question_id: 10)
-		projects = Project.all()
 		report_statuses = RStatus.all()
 
 		render :json => {
@@ -75,8 +85,9 @@ class AdminController < ApplicationController
 		}
 	end
 	def getProjects
-		projects = Project.getProjectList()
-		centers = Center.all
+		projects = Project.getProjectList().where("projects.id in (?)", @ass_projects)
+		centers = Center.where("id in (?)", @ass_centers) if @user.user_type_id == 1
+		centers = Center.where("id in (?)", @project_center_ids) if @user.user_type_id == 2
 		locations = Location.all
 		render :json => {
 			:error => false,
@@ -211,6 +222,12 @@ class AdminController < ApplicationController
 				@user.token_last_update < 30.minutes.ago ? 
 						(render :json => { :error => true, :msg => "Expired token" }) : 
 						@user.update(token_last_update: DateTime.now)
+						ass_centers = UserHasCenter.select("group_concat(center_id)ids").where(user_id: @user.id).take if @user.user_type_id == 1
+						@ass_centers = ass_centers.ids.split(",").map(&:to_i) if @user.user_type_id == 1
+						ass_projects = UserHasProject.select("group_concat(project_id)ids").where(user_id: @user.id).take if @user.user_type_id == 2
+						@ass_projects = ass_projects.ids.split(",").map(&:to_i) if @user.user_type_id == 2
+						@project_centers = Project.select('group_concat(center_id) as ids').where("id in (?)", @ass_projects).take if @user.user_type_id == 2
+						@project_center_ids = @project_centers.ids.split(",").map(&:to_i) if @user.user_type_id == 2
 			else
 				render :json => { :error => true, :msg => "Invalid User" }
 			end
