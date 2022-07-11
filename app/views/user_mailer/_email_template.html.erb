@@ -22,9 +22,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0 20px;">
-                        <p style="font-size: 12px;"><%=I18n.t :legal_terms %>Hi <span style="font-weight: bold;">Adrés González</span>,</p>
-                        <p style="font-size: 12px;">This is your token to access <span style="font-weight: bold;">Hotline&#169:</span></p>
-                        <p style="font-size: 12px;">It will be valid for the next 20 minutes.</p>
+                        <p style="font-size: 12px;"><%=I18n.t :hi %> <span style="font-weight: bold;"><%=user.first_name.capitalize%> <%=user.last_name.capitalize%></span>,</p>
+                        <p style="font-size: 12px;"><%=I18n.t :token_access %><span style="font-weight: bold;"> Hotline:</span></p>
+                        <p style="font-size: 12px;"><%=I18n.t :time_valid_token %></p>
                     </td>
                 </tr>
                 <tr>
@@ -40,13 +40,14 @@
                 </tr>
                 <tr>
                     <td style="text-align: center; padding: 20px;">
-                    <a href="https://hotline.report/admin/" target="_blank" style="font-size: 16px;width: 75%; margin: 10px auto; color: #11888c;">Click here to access your account</p>
+                    <a href="https://hotline.report/admin/" target="_blank" style="font-size: 16px;width: 75%; margin: 10px auto; color: #11888c;">
+                            <%=I18n.t :click_here %></p>
                         </a>
                 </tr>
                 <tr>
                     <td style="padding: 0 20px;">
-                        <p style="font-size: 12px;">Thanks,</p>
-                        <p style="font-size: 12px;"><span style="font-weight: bold;">Hotline&#169:</span> Team</p>
+                        <p style="font-size: 12px;"><%=I18n.t :thanks %>,</p>
+                        <p style="font-size: 12px;"><span style="font-weight: bold;">Hotline:</span> <%=I18n.t :team %></p>
                     </td>
                 </tr>
                 <tr>
@@ -55,8 +56,8 @@
                     font-size: 11px;
                     background-color: #ffffff;
                     padding-bottom: 10px;">
-                                <p style="color: #11888c; font-weight: bold;"><%=I18n.t :legal_terms %></p>
-					            <p style="width: 50%; margin: auto;"><%=I18n.t :copyright %></p>
+                            <p style="color: #11888c; font-weight: bold;"><a href="<%=URL_FRONT%>/public/HOTLINE_REPORT_LEGAL_TERMS.pdf" target="_blank"><%=I18n.t :legal_terms %></a></p>
+					        <p style="width: 50%; margin: auto;"><a href="<%=URL_FRONT%>/public/HOTLINE_REPORT_DATA_POLICY.pdf" target="_blank"><%=I18n.t :copyright %></a></p>
                     </td>
                 </tr>
             </tbody>

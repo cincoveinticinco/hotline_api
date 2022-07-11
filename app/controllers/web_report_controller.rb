@@ -54,7 +54,7 @@ class WebReportController < ApplicationController
 					project = Project.where("p_name = ?", name.a_txt).take
 					rp.update(project_id: project.id) if project
 				end
-				UserMailer.followUpUser(rp.r_email, rp.r_reference).deliver_later if rp.r_email
+				UserMailer.followUpUser(rp.r_email, rp).deliver_later if rp.r_email
 				UserMailer.newReportAdmin(rp).deliver_later
 			end
 		end

@@ -66,7 +66,7 @@
 			</tr>
 			<tr>
 				<td style="padding: 30px 50px;">
-					<p style="font-size: 10px;">“<%=I18n.t :text_the_purpose %>”</p>
+					<p style="font-size: 10px;">“<%=I18n.t :text_the_purpose.html_safe %>”</p>
 				</td>
 			</tr>
       <tr>
@@ -75,8 +75,8 @@
         font-size: 11px;
         background-color: #ffffff;
         padding-bottom: 10px;">
-					<p style="color: #11888c; font-weight: bold;"><%=I18n.t :legal_terms %></p>
-					<p style="width: 50%; margin: auto;"><%=I18n.t :copyright %></p>
+					<p style="color: #11888c; font-weight: bold;"><a href="<%=URL_FRONT%>/public/HOTLINE_REPORT_LEGAL_TERMS.pdf" target="_blank"><%=I18n.t :legal_terms %></a></p>
+					<p style="width: 50%; margin: auto;"><a href="<%=URL_FRONT%>/public/HOTLINE_REPORT_DATA_POLICY.pdf" target="_blank"><%=I18n.t :copyright %></a></p>
 				</td>
 			</tr>
 		</tbody>

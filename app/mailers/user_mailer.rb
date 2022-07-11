@@ -1,19 +1,26 @@
 class UserMailer < ApplicationMailer
-    def email_token(user, token)
+    def email_token(user, token,language)
+        change_language(language)
         subject = "HOTLINE TOKEN"
-        htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token })
+        htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token, :user => user })
         mails = []
         mails.push(user.email)
         send_email(mails, subject, htmlbody)
     end
-    def followUpUser(email, reference)
-        subject = "Thanks for using Hotline Report"
+    def followUpUser(email, report)
+        reference = report.r_reference 
+        language = Language.find report.language_id
+        change_language(language.l_name)
+        subject = I18n.t :thanks
         htmlbody = render_to_string(:partial =>  'user_mailer/follow_up_user.html.erb', :layout => false, :locals => { :reference => reference })
         mails = []
         mails.push(email)
         send_email(mails, subject, htmlbody)
     end
     def replyToUser(report, txt)
+        language = Language.find report.language_id
+        change_language(language.l_name)
+
         subject = "TEST HOTLINE"
         incident = Answer.where(report_id: report.id, question_id: 13).take
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference, :incident => incident, })
@@ -22,6 +29,9 @@ class UserMailer < ApplicationMailer
         send_email(mails, subject, htmlbody) unless report.r_email.blank?
     end
     def replyToAdmin(report_send)
+        language = Language.find report_send.language_id
+        change_language(language.l_name)
+
         report = Report.all_reports_list().where(id: report_send.id).take
         subject = "TEST HOTLINE"
 
@@ -50,10 +60,13 @@ class UserMailer < ApplicationMailer
         send_email(mails, subject, htmlbody)
     end
     def newReportAdmin(report)
-        subject = "NEW INCIDENT REPORTED"
+        language = Language.find report.language_id
+        change_language(language.l_name)
+
 		report = Report.all_reports_list().where(id: report).take
         answers = Answer.reportAnswers().where(report_id: report.id)
-        subject = "NEW INCIDENT REPORTED" + " - " + report.p_name unless report.p_name.blank?
+        subject = I18n.t :new_incident
+        subject = "#{ I18n.t :new_incident} - " + report.p_name unless report.p_name.blank?
         question_response = []
         cont = 1
         while cont <= 18
@@ -81,6 +94,9 @@ class UserMailer < ApplicationMailer
         send_email(mails, subject, htmlbody)
     end
     def sendEmailReports(email, reports, url)
+        language = Language.find reports[0]['language_id']
+        change_language(language.l_name)
+
         require 'jwt'
         subject = "Welcome email"
         links = []
@@ -133,5 +149,17 @@ class UserMailer < ApplicationMailer
         rescue Aws::SES::Errors::ServiceError => error
             puts "Email not sent. Error message: #{error}"
         end
+    end
+
+    def change_language(len)
+        case len.to_s
+        when 'English'
+            I18n.locale = :en
+        when 'Spanish'
+            I18n.locale = :es
+        when 'Portugues'    
+            I18n.locale = :po
+        end
+        
     end
 end

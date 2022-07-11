@@ -6,7 +6,9 @@ class LoginController < ApplicationController
     include ActionController::Cookies
 
     def index
-        
+        rp = Report.find(10)
+        UserMailer.followUpUser(rp.r_email, rp).deliver_later if rp.r_email
+        UserMailer.newReportAdmin(rp).deliver_later
     end
 	def sendToken
         email = params[:email]
@@ -16,7 +18,7 @@ class LoginController < ApplicationController
             user.token = rand_token
             user.token_last_update = DateTime.now
             user.save
-            UserMailer.email_token(user, rand_token).deliver_later ##SEND EMAIL
+            UserMailer.email_token(user, rand_token,params[:language]).deliver_later ##SEND EMAIL
             render :json => { :error => false, :msg => "Email sended" }
         else
             render :json => { :error => true, :msg => "Email not found" }
