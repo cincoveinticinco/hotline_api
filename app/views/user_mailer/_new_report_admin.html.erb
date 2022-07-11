@@ -19,7 +19,7 @@
 			<tr>
 				<td style="text-align: center; padding: 20px; background-color: #FCF5A1;">
 					<p style="text-align: center; font-size: 29px; margin: 0;"><span style="font-weight: bold;">HOTLINE</span>REPORT</p>
-          <span style="font-size: 18px;">NEW REPORT</span>
+          <span style="font-size: 18px;"><%=I18n.t :new_report %></span>
 				</td>
 			</tr>
 			<tr>
@@ -28,47 +28,47 @@
             <tbody>
               <tr>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">DATE REPORT</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :date_report %></span>
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%=report.created_at.strftime('%b %d %Y') %></p>
                 </td>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">METHOD</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :method %></span>
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%=report.r_method_txt %>  </p>
                 </td>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">REPORTER</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :reporter %></span>
                   <!-- question_id: 3 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[3].blank? ? question_response[3]['answer_text'] : '-' %> </p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">CENTER</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :center %></span>
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !report.center_name.blank? ? report.center_name : '-' %></p>
                 </td>
                 <td colspan="2">
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">PROJECT</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :project %></span>
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !report.p_name.blank? ? report.p_name : '-' %></p>
                 </td>
                 <td colspan="3">
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">POSITION ON PRODUCTION</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :position_production %></span>
                   <!-- question_id: 9 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[9].blank? ? question_response[9]['answer_text'] : '-' %></p>
                 </td>
               </tr>
               <tr>
                 <td colspan="3">
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">INCIDENT TYPE</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :incident_type %></span>
                   <!-- question_id: 10 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[10].blank? ? question_response[10]['answer_text'] : '-' %></p>
                 </td>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">DATE INCIDENT</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :date_incident %></span>
                   <!-- question_id: 15 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[15].blank? ?  Date.parse(question_response[15]['answer_text']).strftime('%b %d %Y') : '-' %></p>
                 </td>
                 <td colspan="2">
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">LOCATION INCIDENT</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :location_incident %></span>
                   <!-- question_id: 16 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[16].blank? ? question_response[16]['answer_text'] : '-' %></p>
                 </td>
@@ -79,14 +79,14 @@
 			</tr>
       <tr>
         <td style="padding: 0 30px;">
-          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">INCIDENT</span>
+          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :incident %></span>
           <!-- question_id: 13 -->
           <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[13].blank? ? question_response[13]['answer_text'] : '-' %></p>
         </td>
       </tr>
       <tr>
         <td style="padding: 0 30px;">
-          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">PEOPLE INVOLVED IN THE INCIDENT</span>
+          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :people_involved %></span>
           <!-- question_id: 14 -->
           <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[14].blank? ? question_response[14]['answer_text'] : '-' %></p>
         </td>
@@ -97,12 +97,12 @@
             <tbody>
               <tr>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">REPEATED INCIDENT</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :repeated_incident %></span>
                   <!-- question_id: 17 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[17].blank? ? question_response[17]['answer_text'] : '-' %></p>
                 </td>
                 <td>
-                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;">DISCUSSED INCIDENT WITH MANAGER</span>
+                  <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :discussed_incident %></span>
                   <!-- question_id: 18 -->
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[18].blank? ? question_response[18]['answer_text'] : '-' %></p>
                 </td>
@@ -122,7 +122,7 @@
           color: #363636;
           font-weight: bold;
           display: block;
-          text-decoration: none;">ADD REPLY</p>
+          text-decoration: none;"><%=I18n.t :add_reply %></p>
 				</a>
 			</tr>
       <tr>
@@ -131,8 +131,8 @@
         font-size: 11px;
         background-color: #ffffff;
         padding-bottom: 10px;">
-					<p style="color: #11888c; font-weight: bold;">LEGAL TERMS | DATA POLICY</p>
-					<p style="width: 50%; margin: auto;">COPYRIGHT © 2022 GRUPO CINCOVEINTICINCO SAS. ALL RIGTHS RESERVED</p>
+					<p style="color: #11888c; font-weight: bold;"><%=I18n.t :legal_terms %></p>
+					<p style="width: 50%; margin: auto;"><%=I18n.t :copyright %></p>
 				</td>
 			</tr>
 		</tbody>

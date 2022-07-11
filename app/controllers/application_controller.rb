@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+
 	
 	def checkLocation(info)
 		el = Location.find_by(location_name: info)
@@ -6,4 +7,7 @@ class ApplicationController < ActionController::API
 
 		return el.id
 	end
+
+
+
 end
