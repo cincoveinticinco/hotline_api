@@ -33,6 +33,7 @@ class AdminController < ApplicationController
 				UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 			when 3 then
 				new_estatus = 6
+				# here we need to send the report ticket is closed
 		end
 		report.update(r_status_id: new_estatus)
 

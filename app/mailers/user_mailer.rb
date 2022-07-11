@@ -43,7 +43,7 @@ class UserMailer < ApplicationMailer
         mails = []
         # 
         if report.center_id.nil?
-            users = User.allUsers().where('user_type_id=1').where("send_email = true")
+            users = User.allUsers().where('user_type_id = 1').where("send_email = true")
         else
             users = UserHasCenter.get_all(center_id)
         end
