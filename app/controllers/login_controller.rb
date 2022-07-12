@@ -18,7 +18,7 @@ class LoginController < ApplicationController
             user.token = rand_token
             user.token_last_update = DateTime.now
             user.save
-            UserMailer.email_token(user, rand_token,params[:language]).deliver_later ##SEND EMAIL
+            UserMailer.email_token(user, rand_token,params[:lang]).deliver_later ##SEND EMAIL
             render :json => { :error => false, :msg => "Email sended" }
         else
             render :json => { :error => true, :msg => "Email not found" }
