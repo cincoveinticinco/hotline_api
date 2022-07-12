@@ -78,7 +78,7 @@ class WebReportController < ApplicationController
 		}
 	end
 	def sendEmailToken
-		reports = Report.where(r_email: params[:email]).as_json
+		reports = Report.where(r_email: params[:email]).where('r_reference is not null').as_json
 		unless reports.empty?
 			url = request.protocol + request.host_with_port
 			UserMailer.sendEmailReports(params[:email], reports, url).deliver_later
