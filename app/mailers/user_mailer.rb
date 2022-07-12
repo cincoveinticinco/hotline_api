@@ -41,23 +41,25 @@ class UserMailer < ApplicationMailer
         
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_admin.html.erb', :layout => false, :locals => { :incident => incident, :responses => responses, :report_id=>report.id })
         mails = []
-        # 
+        bbc_mails = []
+        users = UserHasProject.select('users.*').joins(:user).where('user_type_id = 2').where("send_email = true").where(project_id: report.project_id)
         if report.center_id.nil?
-            users = User.allUsers().where('user_type_id = 1').where("send_email = true")
+            users_center = User.where('user_type_id = 1').where("send_email = true")
         else
-            users = UserHasCenter.get_all(report.center_id)
+            users_center = User.allUsers.where('user_type_id = 1').where("send_email = true").where('center_id = ?', report.center_id)
         end
         
-        users.each do |user|
-            mails.push(user['email'])
-        end
-        if !report.project_id.blank?
-            mails_project = UserHasProject.getUserProject(report.project_id)
-            mails_project.each do |user|
+        if !users.blank?
+            users.each do |user|
                 mails.push(user['email'])
             end
         end
-        send_email(mails, subject, htmlbody)
+        users_center.each do |user|
+            bbc_mails.push(user['email'])
+        end
+        
+        mails = bbc_mails if mails.length == 0
+        send_email(mails, subject, htmlbody,bbc_mails)
     end
     def newReportAdmin(report)
         language = Language.find report.language_id
@@ -94,12 +96,6 @@ class UserMailer < ApplicationMailer
         
         mails = bbc_mails if mails.length == 0
 
-        puts '********************'
-        puts mails.length
-        puts mails
-        puts '++++++++++++++++++'
-        puts bbc_mails
-        puts '********************'
         send_email(mails, subject, htmlbody, bbc_mails)
     end
     def sendEmailReports(email, reports, url)
