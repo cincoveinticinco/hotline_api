@@ -160,13 +160,15 @@ class UserMailer < ApplicationMailer
 
     def change_language(len)
         case len.to_s
-        when 'English'
-            I18n.locale = :en
-        when 'Spanish'
-            I18n.locale = :es
-        when 'Portugues'    
-            I18n.locale = :po
+            when 'English'
+                I18n.locale = :en
+            when 'Spanish'
+                I18n.locale = :es
+            when 'Portugues'    
+                I18n.locale = :po
         end
         
     end
+
+    
 end
