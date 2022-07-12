@@ -47,6 +47,7 @@ class UserMailer < ApplicationMailer
         else
             users = UserHasCenter.get_all(report.center_id)
         end
+        
         users.each do |user|
             mails.push(user['email'])
         end
