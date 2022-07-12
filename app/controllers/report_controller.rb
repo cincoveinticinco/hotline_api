@@ -34,6 +34,7 @@ class ReportController < ApplicationController
 		RReply.find(params[:id]).destroy
         render :json => { :error => false, :msg => 'Reply succesfully deleted' }
 	end
+	
 
     private
 	def validateToken

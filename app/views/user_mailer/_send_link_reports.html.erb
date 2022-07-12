@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<td style="text-align: center; padding-bottom: 20px;">
-					<p style="font-size: 22px; margin: 10px 40px;">The following are the reports you have submitted to the system with your email</p>
+					<p style="font-size: 22px; margin: 10px 40px;"><%= I18n.t :the_following %></p>
 				</td>
 			</tr>
       <% links.each do |link| %>
@@ -60,7 +60,7 @@
               text-decoration: none;
               margin: 5px 10px 5px 0;
               text-align: center;">
-              FOLLOW UP
+              <%= I18n.t :follow_up %> 
             </a>
             <p style="margin: 0;">
               <span style="font-weight: bold;">#<%=link[:data][:reference]%></span><br>
@@ -82,8 +82,8 @@
         font-size: 11px;
         background-color: #ffffff;
         padding-bottom: 10px;">
-					<p style="color: #11888c; font-weight: bold;">LEGAL TERMS | DATA POLICY</p>
-					<p style="width: 50%; margin: auto;">COPYRIGHT © 2022 GRUPO CINCOVEINTICINCO SAS. ALL RIGTHS RESERVED</p>
+					<p style="color: #11888c; font-weight: bold;"><a href="<%=URL_FRONT + @file_term%>" target="_blank"><%=I18n.t :legal_terms %></a> | <a href="<%=URL_FRONT+ @file_policy%>" target="_blank"><%=I18n.t :data_policy %></a></p>
+					<p style="width: 50%; margin: auto;"><%=I18n.t :copyright %></p>
 				</td>
 			</tr>
 		</tbody>

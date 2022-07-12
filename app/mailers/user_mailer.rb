@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
     def email_token(user, token,language)
         change_language(language)
-        subject = "HOTLINE TOKEN"
+        subject = I18n.t :new_token
         htmlbody = render_to_string(:partial =>  'user_mailer/email_template.html.erb', :layout => false, :locals => { :token => token, :user => user })
         mails = []
         mails.push(user.email)
@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
         reference = report.r_reference 
         language = Language.find report.language_id
         change_language(language.l_name)
-        subject = I18n.t :thanks
+        subject = (I18n.t :new_report_number) +reference.upcase.to_s
         htmlbody = render_to_string(:partial =>  'user_mailer/follow_up_user.html.erb', :layout => false, :locals => { :reference => reference })
         mails = []
         mails.push(email)
@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
         language = Language.find report.language_id
         change_language(language.l_name)
 
-        subject = "TEST HOTLINE"
+        subject = (I18n.t :report_number) +" "+report.r_reference.to_s+ (I18n.t :response_hotline)
         incident = Answer.where(report_id: report.id, question_id: 13).take
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference, :incident => incident, })
         mails = []
@@ -33,7 +33,7 @@ class UserMailer < ApplicationMailer
         change_language(language.l_name)
 
         report = Report.all_reports_list().where(id: report_send.id).take
-        subject = "TEST HOTLINE"
+        subject = (I18n.t :user_replay) +" "+report.r_reference.upcase.to_s
 
         responses = RReply.reportReplies.where(report_id: report.id)
         incident = Answer.where(report_id: report.id, question_id: 13).take
@@ -103,7 +103,7 @@ class UserMailer < ApplicationMailer
         change_language(language.l_name)
 
         require 'jwt'
-        subject = "Welcome email"
+        subject = I18n.t :your_report
         links = []
         reports.each do |report|
             payload = { id: report['id'], reference: report['r_reference'], date: report['created_at']}
@@ -168,6 +168,25 @@ class UserMailer < ApplicationMailer
                 I18n.locale = :po
             else
                 I18n.locale = :en
+        end
+        files_terms()
+        
+    end
+
+    def files_terms()
+        case I18n.locale.to_s
+            when 'en'
+               @file_term = "/public/HOTLINE_REPORT_LEGAL_TERMS.pdf"
+               @file_policy = "/public/HOTLINE_REPORT_DATA_POLICY.pdf"
+            when 'es'
+                @file_term = "public/HOTLINE_REPORT_TERMINOS_LEGALES.pdf"
+                @file_policy = "public/HOTLINE_REPORT_POLITICA_TRATAMIENTO_DATOS.pdf"
+            when 'po'    
+                @file_term = "/public/HOTLINE_REPORT_LEGAL_TERMS.pdf"
+                @file_policy = "/public/HOTLINE_REPORT_DATA_POLICY.pdf"
+            else
+                @file_term = "/public/HOTLINE_REPORT_LEGAL_TERMS.pdf"
+                @file_policy = "/public/HOTLINE_REPORT_DATA_POLICY.pdf"
         end
         
     end
