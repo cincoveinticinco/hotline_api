@@ -63,7 +63,7 @@
               <%= I18n.t :follow_up %> 
             </a>
             <p style="margin: 0;">
-              <span style="font-weight: bold;">#<%=link[:data][:reference].upcase%></span><br>
+              <span style="font-weight: bold;">#<%= ( !link[:data][:reference].blank? ? link[:data][:reference]upcase : '' )%></span><br>
               <%=Date.parse(link[:data][:date]).strftime('%b %d %Y')%>
             </p>
           </td>
