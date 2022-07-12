@@ -63,7 +63,7 @@ class UserMailer < ApplicationMailer
         language = Language.find report.language_id
         change_language(language.l_name)
 
-		report = Report.all_reports_list().where(id: report).take
+		report = Report.all_reports_list().where(id: report.id).take
         answers = Answer.reportAnswers().where(report_id: report.id)
         subject = I18n.t :new_incident
         subject = "#{ I18n.t :new_incident} - " + report.p_name unless report.p_name.blank?
