@@ -29,7 +29,7 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
+es:
   hello: "Hello world"
   thanks: "Thanks for using Hotline Report"
   your_report_number: "Your report number is"

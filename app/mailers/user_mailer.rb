@@ -88,7 +88,6 @@ class UserMailer < ApplicationMailer
         end
         users_center.each do |user|
             bbc_mails.push(user['email'])
-            mails.push(user['email'])
         end
         if !report.project_id.blank?
             mails_project = UserHasProject.getUserProject(report.project_id)
@@ -97,7 +96,7 @@ class UserMailer < ApplicationMailer
             end
         end
         
-        send_email(mails, subject, htmlbody)
+        send_email(mails, subject, htmlbody, bbc_mails)
     end
     def sendEmailReports(email, reports, url)
         language = Language.find reports[0]['language_id']
@@ -114,7 +113,7 @@ class UserMailer < ApplicationMailer
         send_email([email], subject, htmlbody)
     end
     private 
-    def send_email (receiver, subject, htmlbody)
+    def send_email (receiver, subject, htmlbody,bbc_mails = nil)
         # recibir bbc iy si no es nulo
         region = "us-west-2"
         encoding = "UTF-8"
@@ -137,6 +136,7 @@ class UserMailer < ApplicationMailer
             ses.send_email({
                 destination: {
                     to_addresses: receiver,
+                    bcc_addresses: bbc_mails
                 },
                 message: {
                     body: {
