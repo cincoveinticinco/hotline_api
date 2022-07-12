@@ -42,21 +42,22 @@ class WebReportController < ApplicationController
 			anw.q_option_id	= a['q_option_id'] if qt.q_type_id == 4
 			anw.save
 			rp.update(r_email: a['answer']) if qt.id == 5
-
-			if params['final_report'] == true and rp.r_reference.nil?
-				rp.update(r_reference: SecureRandom.hex(5), r_status_id: 2)
-				answers_proj = Answer.where(report_id: rp.id).where("question_id IN (?)", [11, 12])
-				name = answers_proj.select { |obj| obj.question_id == 11 }.first
-				season = answers_proj.select { |obj| obj.question_id == 12 }.first
-				if name && season
-					project = Project.where("p_name = ? AND p_season = ?", name.a_txt, season.a_txt).take
-					rp.update(project_id: project.id) if project
-				elsif name
-					project = Project.where("p_name = ?", name.a_txt).take
-					rp.update(project_id: project.id) if project
-				end
-				UserMailer.followUpUser(rp.r_email, rp.r_reference).deliver_later if rp.r_email
-				UserMailer.newReportAdmin(rp).deliver_later
+		end
+		if params['final_report'] == true and rp.r_reference.nil?
+			rp.update(r_reference: SecureRandom.hex(5), r_status_id: 2)
+			answers_proj = Answer.where(report_id: rp.id).where("question_id IN (?)", [11, 12])
+			p_name = answers_proj.select { |obj| obj.question_id == 11 }.first
+			season = answers_proj.select { |obj| obj.question_id == 12 }.first
+			if p_name && season
+				project = Project.where("p_name = ? AND p_season = ?", p_name.a_txt, season.a_txt).take
+				project = Project.create(p_name: p_name.a_txt, p_season:season.a_txt)
+				# Here we shold send an email to reconcile project if project
+				rp.update(project_id: project.id) 
+			elsif name
+				project = Project.where("p_name = ?", p_name.a_txt).take
+				project = Project.create(p_name: p_name.a_txt)
+				# Here we shold send an email to reconcile project if project
+				rp.update(project_id: project.id) if project
 			end
 		end
 

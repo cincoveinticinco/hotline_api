@@ -1,5 +1,4 @@
 class Project < ApplicationRecord
-  belongs_to :center
 
   def self.getProjectList()
   	Project.select("projects.*, centers.center_name, locations.location_name")
@@ -23,12 +22,11 @@ class Project < ApplicationRecord
     .select("count(distinct case when reports.r_status_id != 6 then reports.id end) as open_reports")
     .select("count(distinct case when reports.r_status_id = 6 then reports.id end) as closed_reports")
   	# .select("group_concat(case when users.first_name is null or users.last_name is null then email else concat (users.first_name, ' ', users.last_name) ene ) as users")
-  	.joins(:center)
+  	.joins('left join centers ON centers.id = projects.center_id')
   	.joins('left join locations ON locations.id = projects.location_id')
     .joins("left join user_has_projects ON user_has_projects.project_id = projects.id")
   	.joins("left join users ON user_has_projects.user_id = users.id")
     .joins("left join reports ON reports.project_id = projects.id")
     .group("projects.id")
-
   end
 end

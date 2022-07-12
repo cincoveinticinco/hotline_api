@@ -75,14 +75,19 @@ class UserMailer < ApplicationMailer
         end
         htmlbody = render_to_string(:partial =>  'user_mailer/new_report_admin.html.erb', :layout => false, :locals => { :report => report, :question_response =>question_response })
         mails = []
+        bbc_mails = []
+        users = UserHasProject.joins(:user).where('user_type_id = 2').where("send_email = true").where(project_id: report.project_id)
         if report.center_id.nil?
-            users = User.where('user_type_id = 1').where("send_email = true")
+            users_center = User.where('user_type_id = 1').where("send_email = true")
         else
-            users = User.allUsers.where('user_type_id = 1').where("send_email = true").where('center_id is null or center_id = ?', report.center_id)
+            users_center = User.allUsers.where('user_type_id = 1').where("send_email = true").where('center_id is null or center_id = ?', report.center_id)
         end
         
         users.each do |user|
             mails.push(user['email'])
+        end
+        users_center.each do |user|
+            bbc_mails.push(user['email'])
         end
         if !report.project_id.blank?
             mails_project = UserHasProject.getUserProject(report.project_id)
@@ -109,6 +114,7 @@ class UserMailer < ApplicationMailer
     end
     private 
     def send_email (receiver, subject, htmlbody)
+        # recibir bbc iy si no es nulo
         region = "us-west-2"
         encoding = "UTF-8"
         # configure SES session
