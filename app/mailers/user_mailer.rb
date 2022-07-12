@@ -95,7 +95,7 @@ class UserMailer < ApplicationMailer
                 mails.push(user['email'])
             end
         end
-        
+        mails = bbc_mails if mails.blank?
         send_email(mails, subject, htmlbody, bbc_mails)
     end
     def sendEmailReports(email, reports, url)
