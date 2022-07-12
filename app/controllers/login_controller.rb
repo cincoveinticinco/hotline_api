@@ -6,8 +6,8 @@ class LoginController < ApplicationController
     include ActionController::Cookies
 
     def index
-        rp = Report.find(10)
-        UserMailer.followUpUser(rp.r_email, rp).deliver_later if rp.r_email
+        #rp = Report.find(10)
+        #UserMailer.followUpUser(rp.r_email, rp).deliver_later if rp.r_email
         #UserMailer.newReportAdmin(rp).deliver_later
     end
 	def sendToken
