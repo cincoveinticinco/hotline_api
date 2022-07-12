@@ -107,8 +107,8 @@ class UserMailer < ApplicationMailer
         subject = "Welcome email"
         links = []
         reports.each do |report|
-            payload = { id: report['id'], reference: report['r_reference']}
-            links.push(JWT.encode(payload, Rails.application.credentials.secret_key_base, 'HS256'))
+            payload = { id: report['id'], reference: report['r_reference'], date: report['created_at']}
+            links.push( {link: JWT.encode(payload, Rails.application.credentials.secret_key_base, 'HS256'), data: payload })
         end
         htmlbody = render_to_string(:partial =>  'user_mailer/send_link_reports.html.erb', :layout => false, :locals => { :links => links, :url => url })
         send_email([email], subject, htmlbody)
