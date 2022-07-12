@@ -168,7 +168,6 @@ class UserMailer < ApplicationMailer
                 I18n.locale = :po
             else
                 I18n.locale = :en
-            end
         end
         
     end
