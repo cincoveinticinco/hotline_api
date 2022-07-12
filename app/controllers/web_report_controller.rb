@@ -50,15 +50,12 @@ class WebReportController < ApplicationController
 			season = answers_proj.select { |obj| obj.question_id == 12 }.first
 			if p_name && season
 				project = Project.where("p_name = ? AND p_season = ?", p_name.a_txt, season.a_txt).take
-				project = Project.create(p_name: p_name.a_txt, p_season:season.a_txt)
-				# Here we shold send an email to reconcile project if project
-				rp.update(project_id: project.id) 
-			elsif name
+				project = Project.create(p_name: p_name.a_txt, p_season:season.a_txt) if project.blank?
+			elsif p_name
 				project = Project.where("p_name = ?", p_name.a_txt).take
-				project = Project.create(p_name: p_name.a_txt)
-				# Here we shold send an email to reconcile project if project
-				rp.update(project_id: project.id) if project
+				project = Project.create(p_name: p_name.a_txt) if project.blank?
 			end
+			rp.update(project_id: project.id) 
 			UserMailer.followUpUser(rp.r_email, rp).deliver_later if rp.r_email
 			UserMailer.newReportAdmin(rp).deliver_later
 		end
