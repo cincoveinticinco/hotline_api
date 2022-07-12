@@ -80,7 +80,7 @@ class UserMailer < ApplicationMailer
         if report.center_id.nil?
             users_center = User.where('user_type_id = 1').where("send_email = true")
         else
-            users_center = User.allUsers.where('user_type_id = 1').where("send_email = true").where('center_id is null or center_id = ?', report.center_id)
+            users_center = User.allUsers.where('user_type_id = 1').where("send_email = true").where('center_id = ?', report.center_id)
         end
         
         users.each do |user|
