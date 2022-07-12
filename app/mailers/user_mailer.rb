@@ -45,7 +45,7 @@ class UserMailer < ApplicationMailer
         if report.center_id.nil?
             users = User.allUsers().where('user_type_id = 1').where("send_email = true")
         else
-            users = UserHasCenter.get_all(center_id)
+            users = UserHasCenter.get_all(report.center_id)
         end
         
         users.each do |user|
@@ -166,6 +166,9 @@ class UserMailer < ApplicationMailer
                 I18n.locale = :es
             when 'Portugues'    
                 I18n.locale = :po
+            else
+                I18n.locale = :en
+            end
         end
         
     end
