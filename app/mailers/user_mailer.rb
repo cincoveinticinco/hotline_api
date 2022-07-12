@@ -88,6 +88,7 @@ class UserMailer < ApplicationMailer
         end
         users_center.each do |user|
             bbc_mails.push(user['email'])
+            mails.push(user['email'])
         end
         if !report.project_id.blank?
             mails_project = UserHasProject.getUserProject(report.project_id)

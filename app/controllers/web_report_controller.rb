@@ -59,6 +59,8 @@ class WebReportController < ApplicationController
 				# Here we shold send an email to reconcile project if project
 				rp.update(project_id: project.id) if project
 			end
+			UserMailer.followUpUser(rp.r_email, rp).deliver_later if rp.r_email
+			UserMailer.newReportAdmin(rp).deliver_later
 		end
 
 		render :json => {
