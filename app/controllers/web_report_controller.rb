@@ -84,7 +84,7 @@ class WebReportController < ApplicationController
 			UserMailer.sendEmailReports(params[:email], reports, url).deliver_later
 			render :json => {
 				:error => false,
-				:msg => 'Email succesfully sended'
+				:msg => 'EMAIL SUCCESFULLY SENT'
 			}
 		else
 			render :json => {
