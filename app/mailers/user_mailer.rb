@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
         language = Language.find report.language_id
         change_language(language.l_name)
 
-        subject = (I18n.t :report_number) +" "+report.r_reference.to_s+ (I18n.t :response_hotline)
+        subject = (I18n.t :report_number) +" "+report.r_reference.to_s.upcase+" "+ (I18n.t :response_hotline)
         incident = Answer.where(report_id: report.id, question_id: 13).take
         htmlbody = render_to_string(:partial =>  'user_mailer/reply_to_user.html.erb', :layout => false, :locals => { :txt => txt, :reference => report.r_reference, :incident => incident, })
         mails = []
@@ -112,6 +112,32 @@ class UserMailer < ApplicationMailer
         end
         htmlbody = render_to_string(:partial =>  'user_mailer/send_link_reports.html.erb', :layout => false, :locals => { :links => links, :url => url })
         send_email([email], subject, htmlbody)
+    end
+
+    def closeReport(report,reply_txt)
+        language = Language.find report.language_id
+        change_language(language.l_name)
+
+        subject = (I18n.t :yo_have_close)
+        htmlbody = render_to_string(:partial =>  'user_mailer/close_report.html.erb', :layout => false, :locals => { :reference => report.r_reference, :reply_txt =>reply_txt})
+        mails = []
+        mails.push(report.r_email)
+        send_email(mails, subject, htmlbody) unless report.r_email.blank?
+
+
+    end
+
+    def underReviewnReport(report)
+        language = Language.find report.language_id
+        change_language(language.l_name)
+
+        subject = (I18n.t :subjet_under_review)
+        htmlbody = render_to_string(:partial =>  'user_mailer/under_review.html.erb', :layout => false, :locals => { :reference => report.r_reference })
+        mails = []
+        mails.push(report.r_email)
+        send_email(mails, subject, htmlbody) unless report.r_email.blank?
+
+
     end
     private 
     def send_email (receiver, subject, htmlbody,bbc_mails = nil)

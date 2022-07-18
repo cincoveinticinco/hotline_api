@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOTLINE</title>
+</head>
+<body>
+  <table align="center" cellpadding="0" cellspacing="0"
+		style="margin: 10px auto;
+			min-width: 320px;
+			max-width: 540px;
+			width: 100%;
+			font-family: Helvetica, sans-serif;
+      background-color: #efefef;
+      color: #707070;
+      border: 2px solid #efefef;
+      border-top: 15px solid #11888c;">
+		<tbody>
+			<tr>
+				<td style="text-align: center;">
+					<p style="text-align: center; font-size: 29px; margin: 20px;"><span style="color: #11888c; font-weight: bold;">HOTLINE</span>REPORT</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center;">
+					<p style="font-size: 22px; margin: 5px;"><%=I18n.t :yo_have_update %></p>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; text-transform: uppercase;">
+					<p style="font-size: 34px;
+          margin: 10px auto;
+          background-color: #ffffff;
+          padding: 20px;
+          width: 70%;
+          color: #11888c;
+          font-weight: bold;"><%= reference %></p>
+				</td>
+			</tr>
+      <tr>
+				<td>
+					<p style="padding: 0 70px; font-size: 12px;"><%=I18n.t :your_incident %></p>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; text-transform: uppercase;">
+					<a href="<%=URL_FRONT%>/follow-up" target="_blank" style="font-size: 20px;
+          margin: 10px auto;
+          background-color: #A2DDE2;
+          padding: 10px 20px;
+          width: 70%;
+          height: 25px;
+          color: #363636;
+          font-weight: bold;
+          display: block;
+          text-decoration: none;"><%=I18n.t :reply_follow_up %></p>
+				</a>
+			</tr>
+      <tr>
+				<td style="text-align: center;">
+					<p style="font-size: 16px;
+          width: 75%;
+          margin: 10px auto;"><%=I18n.t :report_will_be_closed %></p>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding: 30px 50px;">
+					<p style="font-size: 10px;">“<%=(I18n.t :text_the_purpose).html_safe %>”</p>
+				</td>
+			</tr>
+      <tr>
+				<td style="text-align: center;
+        text-transform: uppercase;
+        font-size: 11px;
+        background-color: #ffffff;
+        padding-bottom: 10px;">
+					<p style="color: #11888c; font-weight: bold;"><a href="<%=URL_FRONT + @file_term%>" target="_blank"><%=I18n.t :legal_terms %></a> | <a href="<%=URL_FRONT+ @file_policy%>" target="_blank"><%=I18n.t :data_policy %></a></p>
+					<p style="width: 50%; margin: auto;"><%=I18n.t :copyright %></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

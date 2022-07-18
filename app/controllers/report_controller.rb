@@ -25,6 +25,9 @@ class ReportController < ApplicationController
 		}
 	end
     def replyReport
+		report = Report.find @report.id
+		report.r_status_id = 5
+		report.save
         RReply.create(report_id: @report.id, reply_txt: params[:reply_txt]) unless params[:id]
 		RReply.find(params[:id]).update(reply_txt: params[:reply_txt]) if params[:id]
 		UserMailer.replyToAdmin(@report).deliver_later

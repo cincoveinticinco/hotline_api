@@ -13,6 +13,8 @@ class AdminController < ApplicationController
 	end
 	def changeStatusreport
 		Report.find(params['id']).update(r_status_id: params['status'])
+		report = Report.find(params['id'])
+		UserMailer.underReviewnReport(report).deliver_later if report.r_email
 		render :json => {
 			:error => false,
 			:msg => 'Report status succesfully changed'
@@ -33,6 +35,7 @@ class AdminController < ApplicationController
 				UserMailer.replyToUser(report, reply_txt).deliver_later if report.r_email
 			when 3 then
 				new_estatus = 6
+				UserMailer.closeReport(report,reply_txt).deliver_later if report.r_email
 				# here we need to send the report ticket is closed
 		end
 		report.update(r_status_id: new_estatus)

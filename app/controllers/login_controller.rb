@@ -85,6 +85,7 @@ class LoginController < ApplicationController
                         redirect_to("#{URL_FRONT}admin/UserNot") #User not found
                     end
                 else
+                    
                     redirect_to("#{URL_FRONT}admin/UserNot") #Email gmail error
                 end
             end
@@ -117,7 +118,7 @@ class LoginController < ApplicationController
         url_google = request.protocol + request.host_with_port
         p '----------------------'
         p url_google
-        url_google = 'https://api.hotline.report/login/googleLogin'
+        url_google = URL_BACK
     end
     def encode_token(user, token)
         user.update(token: token, token_last_update: DateTime.now)
