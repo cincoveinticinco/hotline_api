@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_06_221653) do
+ActiveRecord::Schema.define(version: 2022_07_25_220421) do
 
   create_table "answers", charset: "latin1", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(version: 2022_07_06_221653) do
     t.string "p_name"
     t.string "p_abbreviation"
     t.integer "p_season"
-    t.bigint "center_id", null: false
-    t.bigint "location_id", null: false
+    t.bigint "center_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["center_id"], name: "index_projects_on_center_id"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 2022_07_06_221653) do
 
   create_table "r_replies", charset: "latin1", force: :cascade do |t|
     t.bigint "report_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "reply_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2022_07_06_221653) do
     t.string "email"
     t.boolean "send_email", default: false
     t.string "token"
+    t.boolean "confidentiality_notice", default: false
     t.datetime "token_last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -177,14 +178,14 @@ ActiveRecord::Schema.define(version: 2022_07_06_221653) do
 
   add_foreign_key "answers", "q_options"
   add_foreign_key "answers", "questions"
-  add_foreign_key "answers", "reports"
+  add_foreign_key "answers", "reports", on_update: :cascade, on_delete: :cascade
   add_foreign_key "project_aliases", "projects"
   add_foreign_key "projects", "centers"
   add_foreign_key "projects", "locations"
   add_foreign_key "q_options", "questions"
   add_foreign_key "questions", "q_types"
   add_foreign_key "questions", "r_types"
-  add_foreign_key "r_replies", "reports"
+  add_foreign_key "r_replies", "reports", on_update: :cascade, on_delete: :cascade
   add_foreign_key "r_replies", "users"
   add_foreign_key "reports", "languages"
   add_foreign_key "reports", "projects"

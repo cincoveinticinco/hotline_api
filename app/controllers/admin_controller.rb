@@ -49,7 +49,8 @@ class AdminController < ApplicationController
 		render :json => {
 			:error => false,
 			:user => @user.id,
-			:user_type_id => @user.user_type_id
+			:user_type_id => @user.user_type_id,
+			:confidentiality_notice => @user.confidentiality_notice,
 		}
 	end
 	def DeleteReply
@@ -66,7 +67,7 @@ class AdminController < ApplicationController
 	end
 	def listReports
 		if @user.user_type_id == 1
-			reports = Report.all_reports_list().where("center_id in (?)", @ass_centers)
+			reports = Report.all_reports_list().where("center_id in (?)", @ass_centers).where("reports.project_id in (?)", @ass_projects)
 			centers = Center.where("id in (?)", @ass_centers)
 			projects = Project.where("center_id in (?)", @ass_centers)
 		elsif @user.user_type_id == 2
@@ -182,6 +183,12 @@ class AdminController < ApplicationController
 	def getReportDetail
 		report = Report.all_reports_list().where(id: params['report_id']).take
 		answers = Answer.reportAnswers().where(report_id: params['report_id'])
+		answers.each do |answer|
+			 if answer['q_type_id'] == 6
+				a['a_txt'] = signAwsS3Url(a['a_txt'])
+			 end
+		end
+		
 		replies = RReply.reportReplies().select("users.email").where(report_id: params['report_id'])
 		render :json => {
 			:error => false,
@@ -213,6 +220,14 @@ class AdminController < ApplicationController
         route = "tmp/qrcode.png"
         IO.binwrite(route, png.to_s)
         send_file(route, filename: "qrcode-#{project.p_name.gsub(' ', '_')}.png", type: "image/png")
+	end
+
+	def accept_confidentiality_notice
+		@user.update(confidentiality_notice: true)
+		render :json => {
+			:error => false,
+			:msg => 'successful',
+		}
 	end
 	private
 	def validateToken

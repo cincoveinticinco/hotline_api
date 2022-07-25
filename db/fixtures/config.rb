@@ -62,6 +62,10 @@ QType.seed do |s|
   s.id = 5
   s.q_type_txt = "Multiple options"
 end
+QType.seed do |s|
+  s.id = 6
+  s.q_type_txt = "Multiple File"
+end
 # centers
 Center.seed do |s|
   s.id = 1

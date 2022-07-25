@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 			post :changeStatusreport
 			post :deleteProject
 			get :getQrCode
+			get :accept_confidentiality_notice
 		end
 		namespace :login do
 			post :sendToken

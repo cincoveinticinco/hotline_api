@@ -34,10 +34,18 @@ class WebReportController < ApplicationController
 		end
 		answers.each do |a|
 			qt = Question.find(a['question_id'])
-			anw = Answer.find_by(:report_id => rp.id, :question_id => qt.id)
-			anw = Answer.create(report_id: rp.id, question_id: qt.id) if anw.blank?
+			if qt.q_type_id == 6
+				puts '*******'
+				puts a['file']['url_data']
+				puts '*******'
+				a['answer'] = uploadFileToS3(a['file']['url_data'] ,"report_#{rp.id}")
+			else
+				anw = Answer.find_by(:report_id => rp.id, :question_id => qt.id)
+				anw = Answer.create(report_id: rp.id, question_id: qt.id) if anw.blank?
+			end
+			
 
-			anw.a_txt = a['answer'] if qt.q_type_id == 1  || (qt.q_type_id == 3 && a['a_yes_or_no'] == true)
+			anw.a_txt = a['answer'] if (qt.q_type_id == 1 || qt.q_type_id == 6)  || (qt.q_type_id == 3 && a['a_yes_or_no'] == true)
 			anw.a_yes_or_no = a['a_yes_or_no'] if qt.q_type_id == 2 || qt.q_type_id == 3
 			anw.q_option_id	= a['q_option_id'] if qt.q_type_id == 4
 			anw.save

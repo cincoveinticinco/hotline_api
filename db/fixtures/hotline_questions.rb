@@ -31,3 +31,17 @@
 #   s.q_title = 'Follow up'
 #   s.q_txt = ''
 # end
+Question.seed do |s|
+   s.id = 19
+   s.r_type_id = 1
+   s.q_type_id = 1
+   s.q_title = 'Do you want to add any information to your report?'
+   s.q_txt = ''
+end
+Question.seed do |s|
+    s.id = 20
+    s.r_type_id = 1
+    s.q_type_id = 6
+    s.q_title = 'Add files (.pdf or .jpg) Max. 5 files'
+    s.q_txt = ''
+ end
