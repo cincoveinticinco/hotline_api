@@ -96,6 +96,6 @@ class Report < ApplicationRecord
   			:r_method, :r_status)
   	.joins("left join projects ON projects.id = reports.project_id")
   	.joins("left join centers ON centers.id = projects.center_id")
-	.group("reports.id")
+	.group("reports.id").order('reports.created_at')
   end
 end
