@@ -79,7 +79,7 @@ class LoginController < ApplicationController
                             :domain => URL_FRONT,
                             :expires => 1.day.from_now
                         }
-                        redirect_to("#{URL_FRONT}/admin/admin-home") #logintoken
+                        #redirect_to("#{URL_FRONT}/admin/admin-home") #logintoken
                     else
                         redirect_to("#{URL_FRONT}/admin/UserNot") #User not found
                     end
