@@ -234,6 +234,33 @@ class AdminController < ApplicationController
 			:msg => 'successful',
 		}
 	end
+
+	def reasign_report
+		email = params[:email]
+		report_id = params[:report_id]
+		user = User.where('email=?',email).take
+		if user.blank?
+			user = User.new
+			user.email = email
+			user.user_type_id = 2
+			user.send_email = true
+			user.save
+		end
+		user_report = UserHasReport.where('user_id=?',user.id).where('report_id=?',report_id).take
+		if user_report.blank?
+			user_report = UserHasReport.new
+			user_report.user_id = user.id
+			user_report.report_id = report_id
+			user_report.save
+		end
+		rp = Report.find(report_id)
+		UserMailer.newReportAdmin(rp,user.id).deliver_now
+		render :json => {
+			:error => false,
+			:msg => 'successful',
+		}
+	end
+
 	private
 	def validateToken
 		require 'jwt'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_25_222709) do
+ActiveRecord::Schema.define(version: 2022_07_26_191641) do
 
   create_table "answers", charset: "latin1", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2022_07_25_222709) do
   create_table "r_replies", charset: "latin1", force: :cascade do |t|
     t.bigint "report_id", null: false
     t.bigint "user_id"
-    t.boolean "show_replay", default: false
+    t.boolean "show_replay", default: true
     t.string "reply_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -157,6 +157,15 @@ ActiveRecord::Schema.define(version: 2022_07_25_222709) do
     t.index ["user_id"], name: "index_user_has_projects_on_user_id"
   end
 
+  create_table "user_has_reports", charset: "latin1", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "report_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["report_id"], name: "index_user_has_reports_on_report_id"
+    t.index ["user_id"], name: "index_user_has_reports_on_user_id"
+  end
+
   create_table "user_types", charset: "latin1", force: :cascade do |t|
     t.string "user_type_name"
     t.datetime "created_at", precision: 6, null: false
@@ -197,5 +206,7 @@ ActiveRecord::Schema.define(version: 2022_07_25_222709) do
   add_foreign_key "user_has_centers", "users"
   add_foreign_key "user_has_projects", "projects"
   add_foreign_key "user_has_projects", "users"
+  add_foreign_key "user_has_reports", "reports", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_has_reports", "users", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users", "user_types"
 end

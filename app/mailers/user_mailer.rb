@@ -61,7 +61,7 @@ class UserMailer < ApplicationMailer
         mails = bbc_mails if mails.length == 0
         send_email(mails, subject, htmlbody,bbc_mails)
     end
-    def newReportAdmin(report)
+    def newReportAdmin(report,send_reasign_user_id = nil)
         language = Language.find report.language_id
         change_language(language.l_name)
 
@@ -95,6 +95,12 @@ class UserMailer < ApplicationMailer
         end
         
         mails = bbc_mails if mails.length == 0
+        unless send_reasign_user_id.nil?
+            user_reasign = User.find(send_reasign_user_id)
+            mails = []
+            bbc_mails = []
+            mails.push(user_reasign.email)
+        end
 
         send_email(mails, subject, htmlbody, bbc_mails)
     end

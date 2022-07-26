@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 			post :deleteProject
 			get :getQrCode
 			get :accept_confidentiality_notice
+			post :reasign_report
 		end
 		namespace :login do
 			post :sendToken
