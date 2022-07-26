@@ -32,16 +32,15 @@ class WebReportController < ApplicationController
 			
 		else
 			rp = Report.find(params['report_id'])
-			puts '*******'
-				puts params['report_id']
-				puts '*******'
-				dasdad
+			
 		end
 		answers.each do |a|
+			a = a[1]
 			qt = Question.find(a['question_id'])
 			if qt.q_type_id == 6
 				
-				a['answer'] = uploadFileToS3(a['file']['url_data'] ,"report_#{rp.id}")
+				a['answer'] = uploadFileToS3(a['file'] ,"report_#{rp.id}")
+				anw = Answer.create(report_id: rp.id, question_id: qt.id)
 			else
 				anw = Answer.find_by(:report_id => rp.id, :question_id => qt.id)
 				anw = Answer.create(report_id: rp.id, question_id: qt.id) if anw.blank?
