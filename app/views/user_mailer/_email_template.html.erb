@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <td style="padding: 0 20px;">
-                        <p style="font-size: 12px;"><%=I18n.t :hi %> <span style="font-weight: bold;"><%=user.first_name.capitalize%> <%=user.last_name.capitalize%></span>,</p>
+                        <p style="font-size: 12px;"><%=I18n.t :hi %> <span style="font-weight: bold;"><%= !user.first_name.blank? ?  user.first_name.capitalize : ''%> <%= !user.last_name.blank? ? user.last_name.capitalize : ''%></span>,</p>
                         <p style="font-size: 12px;"><%=I18n.t :token_access %><span style="font-weight: bold;"> Hotline:</span></p>
                         <p style="font-size: 12px;"><%=I18n.t :time_valid_token %></p>
                     </td>

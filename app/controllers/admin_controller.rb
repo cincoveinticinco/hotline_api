@@ -71,12 +71,28 @@ class AdminController < ApplicationController
 		}
 	end
 	def listReports
+		user_has_reports = UserHasReport.select("group_concat(report_id) report_ids").where('user_id=?',@user.id).take
+		reports_ids = nil
+		if !user_has_reports.blank? and !user_has_reports.report_ids.blank?
+			reports_ids = user_has_reports.report_ids.split(",").map(&:to_i)
+		end
+
 		if @user.user_type_id == 1
-			reports = Report.all_reports_list().where("center_id in (?)", @ass_centers)
+			user_has_repor = UserHasReport
+			if reports_ids.nil?
+				reports = Report.all_reports_list().where("center_id in (?)", @ass_centers)
+			else
+				reports = Report.all_reports_list().where("(center_id in (?) or reports.id in (?))", @ass_centers,reports_ids)
+			end
 			centers = Center.where("id in (?)", @ass_centers)
 			projects = Project.where("center_id in (?)", @ass_centers)
 		elsif @user.user_type_id == 2
-			reports = Report.all_reports_list().where("reports.project_id in (?)", @ass_projects)
+			if reports_ids.nil?
+				reports = Report.all_reports_list().where("reports.project_id in (?)", @ass_projects)
+			else
+				reports = Report.all_reports_list().where("(reports.project_id in (?) or reports.id in (?))", @ass_centers,reports_ids)
+			end
+			
 			centers = nil
 			projects =  Project.where("id in (?)", @ass_projects)
 		end
@@ -254,7 +270,7 @@ class AdminController < ApplicationController
 			user_report.save
 		end
 		rp = Report.find(report_id)
-		UserMailer.newReportAdmin(rp,user.id).deliver_now
+		UserMailer.newReportAdmin(rp,user.id).deliver_later
 		render :json => {
 			:error => false,
 			:msg => 'successful',
@@ -275,11 +291,11 @@ class AdminController < ApplicationController
 						(render :json => { :error => true, :msg => "Expired token" }) : 
 						@user.update(token_last_update: DateTime.now)
 						ass_centers = UserHasCenter.select("group_concat(center_id)ids").where(user_id: @user.id).take if @user.user_type_id == 1
-						@ass_centers = ass_centers.ids.split(",").map(&:to_i) if @user.user_type_id == 1
+						@ass_centers = ass_centers.ids.split(",").map(&:to_i) if @user.user_type_id == 1 and !ass_centers.ids.blank?
 						ass_projects = UserHasProject.select("group_concat(project_id)ids").where(user_id: @user.id).take if @user.user_type_id == 2
-						@ass_projects = ass_projects.ids.split(",").map(&:to_i) if @user.user_type_id == 2
+						@ass_projects = ass_projects.ids.split(",").map(&:to_i) if @user.user_type_id == 2 and !ass_projects.ids.blank?
 						@project_centers = Project.select('group_concat(center_id) as ids').where("id in (?)", @ass_projects).take if @user.user_type_id == 2
-						@project_center_ids = @project_centers.ids.split(",").map(&:to_i) if @user.user_type_id == 2
+						@project_center_ids = @project_centers.ids.split(",").map(&:to_i) if @user.user_type_id == 2 and !@project_centers.ids.blank?
 			else
 				render :json => { :error => true, :msg => "Invalid User" }
 			end
