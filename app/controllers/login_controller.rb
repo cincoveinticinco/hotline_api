@@ -76,10 +76,9 @@ class LoginController < ApplicationController
                         token = encode_token(user, token)
                         cookies[:hotline] = {
                             :value => token,
-                            :domain => URL_FRONT,
                             :expires => 1.day.from_now
                         }
-                        redirect_to("#{URL_FRONTtt}/admin/admin-home") #logintoken
+                        redirect_to("#{URL_FRONT}/admin/admin-home") #logintoken
                     else
                         redirect_to("#{URL_FRONT}/admin/UserNot") #User not found
                     end
