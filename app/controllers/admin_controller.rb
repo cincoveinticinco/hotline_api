@@ -23,9 +23,14 @@ class AdminController < ApplicationController
 	def addReportReply
 		reply_txt = params['reply_txt']
 		reply = RReply.find(params['id']) unless params['id'].blank?
-		reply.update(reply_txt: reply_txt) unless params['id'].blank?
+		reply = RReply.new if params['id'].blank?
+		reply.reply_txt = reply_txt
+		reply.user_id = @user.id
+		reply.report_id = params['report_id']
+		reply.show_replay = false if params['action_status'].to_i == 1
+		reply.save
+		
 
-		RReply.create(report_id: params['report_id'], user_id: @user.id, reply_txt: reply_txt) if reply.blank?
 		report = Report.find(params['report_id'])
 
 		case params['action_status'].to_i
@@ -67,7 +72,7 @@ class AdminController < ApplicationController
 	end
 	def listReports
 		if @user.user_type_id == 1
-			reports = Report.all_reports_list().where("center_id in (?)", @ass_centers).where("reports.project_id in (?)", @ass_projects)
+			reports = Report.all_reports_list().where("center_id in (?)", @ass_centers)
 			centers = Center.where("id in (?)", @ass_centers)
 			projects = Project.where("center_id in (?)", @ass_centers)
 		elsif @user.user_type_id == 2

@@ -25,19 +25,22 @@ class WebReportController < ApplicationController
 	def submitAnswer
 		answers = params['answers']
 		language = params['lang'].blank? ? 1 : params['lang']
+		
 		if params['report_id'].blank?
 			# set default type hotline, default status Started, method online
 			rp = Report.create(r_type_id: 1, r_status_id: 1, r_method_id: 1, language_id:language)
 			
 		else
 			rp = Report.find(params['report_id'])
+			puts '*******'
+				puts params['report_id']
+				puts '*******'
+				dasdad
 		end
 		answers.each do |a|
 			qt = Question.find(a['question_id'])
 			if qt.q_type_id == 6
-				puts '*******'
-				puts a['file']['url_data']
-				puts '*******'
+				
 				a['answer'] = uploadFileToS3(a['file']['url_data'] ,"report_#{rp.id}")
 			else
 				anw = Answer.find_by(:report_id => rp.id, :question_id => qt.id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_25_220421) do
+ActiveRecord::Schema.define(version: 2022_07_25_222709) do
 
   create_table "answers", charset: "latin1", force: :cascade do |t|
     t.bigint "question_id", null: false
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2022_07_25_220421) do
   create_table "r_replies", charset: "latin1", force: :cascade do |t|
     t.bigint "report_id", null: false
     t.bigint "user_id"
+    t.boolean "show_replay", default: false
     t.string "reply_txt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
