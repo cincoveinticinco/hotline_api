@@ -53,7 +53,8 @@ class WebReportController < ApplicationController
 			anw.save
 			rp.update(r_email: a['answer']) if qt.id == 5
 		end
-		if params['final_report'] == true and rp.r_reference.nil?
+		
+		if params['final_report'] and rp.r_reference.nil?
 			rp.update(r_reference: SecureRandom.hex(5), r_status_id: 2)
 			answers_proj = Answer.where(report_id: rp.id).where("question_id IN (?)", [11, 12])
 			p_name = answers_proj.select { |obj| obj.question_id == 11 }.first

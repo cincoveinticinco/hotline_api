@@ -71,7 +71,7 @@ class UserMailer < ApplicationMailer
         subject = "#{ I18n.t :new_incident} - " + report.p_name unless report.p_name.blank?
         question_response = []
         cont = 1
-        while cont <= 18
+        while cont <= 19
             question_response[cont] = answers.select{|an| an['question_id'].to_i == cont }.first
             cont +=1
         end

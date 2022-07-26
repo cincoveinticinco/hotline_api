@@ -190,7 +190,7 @@ class AdminController < ApplicationController
 		answers = Answer.reportAnswers().where(report_id: params['report_id'])
 		answers.each do |answer|
 			 if answer['q_type_id'] == 6
-				a['a_txt'] = signAwsS3Url(a['a_txt'])
+				answer['a_txt'] = signAwsS3Url(answer['a_txt'])
 			 end
 		end
 		

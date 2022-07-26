@@ -111,6 +111,16 @@
           </table>
         </td>
       </tr>
+
+      <tr>
+        <td style="padding: 0 30px;">
+          <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :add_any_information %></span>
+          <!-- question_id: 14 -->
+          <p style="margin: 3px 0 10px; font-size: 11px;"><%= !question_response[19].blank? ? question_response[19]['answer_text'] : '-' %></p>
+        </td>
+      </tr>
+
+
 			<tr>
 				<td style="text-align: center; text-transform: uppercase;">
 					<a href="<%=URL_FRONT%>/admin/admin-home/<%=report.id%>" target="_blank" style="font-size: 20px;
