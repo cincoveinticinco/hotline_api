@@ -34,8 +34,7 @@ po:
   thanks: "Obrigado por usar HOTLINE.REPORT"
   your_report_number: "O número do seu relatório é"
   follow_up: "ACOMPANHAMENTO"
-  text_you_will_need: "Você vai precisar disso <span style='color: #585858; font-weight: bold;'>NÚMERO DO RELATÓRIO</span> 
-e um<span style='color: #585858; font-weight: bold;'> SENHA </span> você criou para acessar o sistema para acompanhamentos"
+  text_you_will_need: "Você vai precisar disso <span style='color: #585858; font-weight: bold;'>NÚMERO DO RELATÓRIO</span> e um<span style='color: #585858; font-weight: bold;'> SENHA </span> você criou para acessar o sistema para acompanhamentos"
   text_the_purpose: "O objetivo desta plataforma é garantir que todas as pessoas que trabalham nesta produção tenham um canal para informar a produção sobre questões de segurança, trabalhistas ou éticas ou fatos estritamente relacionadas ao desenvolvimento de suas atividades. Esta plataforma não está disponível para atender denúncias sobre a prática de crimes ocorridos dentro ou fora da produção. Lembre-se de que a retaliação contra qualquer denunciante que levantar uma preocupação de boa fé não será tolerada."
   legal_terms: "LEGAL TERMS"
   data_policy: "DATA POLICY"

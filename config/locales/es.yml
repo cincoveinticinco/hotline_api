@@ -32,9 +32,9 @@
 es:
   hello: "Hello world"
   thanks: "Gracias por utilizar Hotline Report"
-  your_report_number: "Su número de incidente es:"
+  your_report_number: "Su número de incidente es"
   follow_up: "SEGUIMIENTO"
-  text_you_will_need: "Usted necesitará el <span style='color: #585858; font-weight: bold;'>NUEMRO DE INCIDENTE</span> y la <span style='color: #585858; font-weight: bold;'>CONTRASEÑA</span> que creó para acceder al estatus del caso."
+  text_you_will_need: "Usted necesitará el <span style='color: #585858; font-weight: bold;'>NÚMERO DE INCIDENTE</span> y la <span style='color: #585858; font-weight: bold;'>CONTRASEÑA</span> que creó para acceder al estatus del caso."
   text_the_purpose: "El propósito de esta plataforma es garantizar que todas las personas que trabajan en esta producción tengan un canal para reportar inquietudes de seguridad, laborales o éticas que estén estrictamente relacionadas con el desarrollo de sus actividades laborales. Esta línea directa no está disponible para atender denuncias sobre delitos ocurridos dentro o fuera de la producción. Recuerde que no se tolerarán las represalias contra cualquier parte que reporte un incidente."
  
   copyright: "COPYRIGHT © 2022 G525. TODOS LOS DERECHOS RESERVADOS"
