@@ -27,11 +27,11 @@
           <table style="width: 100%;" cellpadding="1" cellspacing="0">
             <tbody>
               <tr>
-                <td>
+                <td style="vertical-align: baseline;">
                   <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :date_report %></span>
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%=report.created_at.strftime('%b %d %Y') %></p>
                 </td>
-                <td>
+                <td colspan="2" style="vertical-align: baseline;">
                   <span style="text-transform: uppercase; color: #11888c; font-size: 10px;"><%=I18n.t :method %></span>
                   <p style="margin: 3px 0 10px; font-size: 11px;"><%=report.r_method_txt %>  </p>
                 </td>
