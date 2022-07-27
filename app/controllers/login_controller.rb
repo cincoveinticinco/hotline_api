@@ -78,7 +78,7 @@ class LoginController < ApplicationController
                             :value => token,
                             :expires => 1.day.from_now
                         }
-                        redirect_to("#{URL_FRONT}/login/#{token}") #logintoken
+                        redirect_to("#{URL_FRONT}/admin/login/#{token}") #logintoken
                     else
                         redirect_to("#{URL_FRONT}/admin/UserNot") #User not found
                     end
