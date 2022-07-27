@@ -112,7 +112,7 @@ class AdminController < ApplicationController
 	end
 	def getProjects
 		projects = Project.getProjectList().where("projects.center_id in (?)", @ass_centers) if @user.user_type_id == 1
-		projects = Project.getProjectList().where("projects.center_id in (?)", @project_center_ids) if @user.user_type_id == 2
+		projects = Project.getProjectList().where("projects.id in (?)", @ass_projects) if @user.user_type_id == 2
 		centers = Center.where("id in (?)", @ass_centers) if @user.user_type_id == 1
 		centers = Center.where("id in (?)", @project_center_ids) if @user.user_type_id == 2
 		locations = Location.all
